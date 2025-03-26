@@ -245,7 +245,7 @@
     <div id="current-project" class="section">
         <h2>RoboSim</h2>
         <div class="project">
-            <p>Project Description Here</p>
+            <p>Being updated ... </p>
             <div class="links">
                 <a href="https://github.com/your-repo" target="_blank">GitHub Code</a>
             </div>
@@ -255,12 +255,13 @@
     <div id="orbslam" class="section">
         <h2>ORBSLAM Augmentation</h2>
         <div class="project-description">
-            <p>Description of your work augmenting ORBSLAM to tolerate occluding dynamic objects.</p>
+            <p>For this project, I updated the ORBSLAM repository with ROS2 capabilities to provide an interface between SAM2 detection and segmentation of dynamic objects, which is run in parallel with the main system.
+                I implemented an additional SLAM component that tracks the positions of these labelled and segmented dynamic objects, using the detections to guide the original static system to ignore keypoints detected on the
+                dynamic objects when reducing reprojection loss between views and performing bundle adjustment. I hope to eventually continue this project by using the dynamic object positions and predicted motions to aid in the 
+                optimization process, rather than being masked.
+            </p>
             <div class="links">
-                <a href="your-pdf-writeup.pdf" target="_blank">PDF Writeup (Download)</a>
-                <a href="video1-link" target="_blank">Video 1</a>
-                <a href="video2-link" target="_blank">Video 2</a>
-                <a href="https://github.com/your-orbslam-repo" target="_blank">GitHub Code</a>
+                <a href="https://github.com/kn1451j/DynORBBase" target="_blank">GitHub Code</a>
             </div>
         </div>
         <embed src="stuff/proj_report.pdf" type="application/pdf" class="pdf-embed" />
@@ -278,27 +279,29 @@
 
     <div id="robotics" class="section">
         <h2>RoboSubmarine Mapping (Bucket) System</h2>
-        <p>Description of the compiler you wrote in OCaml for a subset of C.</p>
+        <p>My robotics interest started with CMU's Robotic Submarine team, where I was one of the founding members. My work for the team involved implementing a large chunk of our perception stack - including camera driver code for our OAKDs - and our entire mapping system in C++, Python, and ROS1.</p>
+        <div class="links">
+            <a href="https://www.cs.cmu.edu/news/2022/students-relaunch-robotic-sub-team" target="_blank">Article about team founding</a>
+            <a href="https://github.com/Tartan-AUV/tauv-mono" target="_blank">Team Repo</a>
+            <a href="https://www.tartanauv.com/" target="_blank">Team Website</a>
+        </div>
         <div class="project">
             <video class="project-video" controls>
                 <source src="stuff/bucket_system_demo.mov" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
-            <div class="links">
-                <a href="https://github.com/your-robotics-code" target="_blank">GitHub Code</a>
-                <a href="news-article-link" target="_blank">News Article</a>
-            </div>
+            <p> This is a simulated demo of the mapping code, which matches noisy feature detections (spheres) to "buckets" (cubes), which are Kalman Filter objects tracking the predicted positions of the features, and are dynamically managed using iterative culling and time-based decay.</p>
+            <a href="https://github.com/Tartan-AUV/tauv-mono/tree/develop/packages/tauv_common/src/global_map_cpp" target="_blank">Code link</a>
         </div>
     </div>
 
     <div id="compiler" class="section">
         <h2>C Compiler in OCaml</h2>
         <div class="project-description">
-            <p>Description of the compiler you wrote in OCaml for a subset of C.</p>
-            <div class="links">
-                <a href="optimization-report.pdf" target="_blank">Optimization Report (Download)</a>
-                <a href="memory-management-report.pdf" target="_blank">Memory Management Report (Download)</a>
-            </div>
+            <p>These are the final two reports from the semester-long project of implementing a C compiler in OCaml from scratch. Our compiled code nearly matched the efficiency of compiled code from GCC on the -O1 optimization flag. 
+                The optimizations we implemented are described in the Lab 5 writeup.
+                For our elected final component of the compiler - as described in the Lab 6 report - we added a garbage collection system.
+            </p>
             <!-- Embedded PDFs side by side -->
             <div style="display: flex; justify-content: space-between; gap: 20px;">
                 <embed src="stuff/compilerl5.pdf" type="application/pdf" class="pdf-embed" />
