@@ -1,338 +1,259 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Katia's Stuff</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        /* Global Styles */
-        body {
-            font-family: 'Nunito', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #ffffff;
-            color: #333;
-            line-height: 1.6;
-            padding-bottom: 40px;
-            scroll-behavior: smooth;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Katia's Stuff</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Nunito', sans-serif;
+      margin: 0;
+      background-color: #ffffff;
+      color: #333;
+      scroll-behavior: smooth;
+    }
 
-        /* Header Styles */
-        header {
-            background-color: #2e8b57;
-            color: #fff;
-            padding: 40px 20px;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
+    /* Header Styles */
+    header {
+    background-color: #1e3a8a; /* deep blue */
+    color: white;
+    padding: 60px 20px 40px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
 
-        header h1 {
-            margin: 10px 0;
-            font-size: 3.5em;
-        }
+    header h1 {
+      font-size: 3em;
+      margin: 0 0 10px;
+    }
 
-        header p {
-            font-size: 1.2em;
-            margin-top: 10px;
-        }
+    header p {
+      font-size: 1.2em;
+      margin: 0;
+    }
 
-        /* Headshot Styles */
-        header .headshot {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%; /* Make the headshot round */
-            overflow: hidden;
-            margin-bottom: 20px;
-            display: block; /* By default, show the headshot */
-        }
+    nav {
+    background-color: #243c94; /* slightly lighter blue */
+      text-align: center;
+      padding: 12px 10px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
-        header .headshot img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+    nav a,
+    .blog-btn {
+      margin: 0 10px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.05em;
+      transition: all 0.3s ease;
+    }
 
-        /* Name and Headshot alignment for larger screens */
-        header .name-and-headshot {
-            display: flex;
-            align-items: center;
-        }
+    nav a:hover,
+    .blog-btn:hover {
+        background-color: #1e3a8a;
+        color: white;
+    }
 
-        header .name-and-headshot h1 {
-            margin-left: 20px; /* Space between the headshot and name */
-            font-size: 3.5em;
-        }
+    .blog-btn {
+        background-color: #dbeafe;
+        color: #1e3a8a;
+      padding: 8px 16px;
+      border-radius: 25px;
+    }
 
-        /* Resume Section Styles */
-        #resume {
-            background-color: #f9f9f9;
-            padding: 40px 20px;
-            text-align: center;
-            margin-top: -40px;
-            margin-bottom: 40px;
-        }
+    .section {
+      padding: 50px 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
 
-        #resume h2 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            color: #2e8b57;
-            border-bottom: 2px solid #2e8b57;
-            display: inline-block;
-            padding-bottom: 5px;
-        }
+    .section h2 {
+      font-size: 2.3em;
+      color: #1e3a8a;
+      border-color: #1e3a8a;
+      padding-bottom: 8px;
+      display: inline-block;
+      margin-bottom: 20px;
+      text-align: center;
+    }
 
-        /* Navigation Styles */
-        nav {
-            background-color: #1f5f3b;
-            padding: 15px 0;
-            text-align: center;
-        }
+    .project-description p {
+        text-align: center;
+    }
 
-        nav a {
-            margin: 0 15px;
-            color: #fff;
-            text-decoration: none;
-            font-size: 1.1em;
-            transition: color 0.3s;
-        }
+    .links a {
+      margin-right: 15px;
+      color: #1e3a8a;
+      font-weight: 600;
+    }
 
-        nav a:hover {
-            color: #f0f0f0;
-        }
+    .links a:hover {
+        color: #3b82f6;
+      text-decoration: underline;
+    }
 
-        /* Blog/Art Button */
-        .blog-btn {
-            background-color: #f0f0f0;
-            color: #2e8b57;
-            padding: 10px 20px;
-            font-size: 1.1em;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: bold;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            cursor: pointer;
-        }
+    .video-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: 20px;
+    }
 
-        .blog-btn:hover {
-            background-color: #2e8b57;
-            color: #fff;
-        }
+    .project-video {
+      flex: 1 1 48%;
+      max-width: 48%;
+      height: auto;
+      border-radius: 8px;
+    }
 
-        /* Section Styles */
-        .section {
-            padding: 40px 20px;
-            text-align: center;
-            margin-bottom: 40px;
-            max-width: 1000px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+    .pdf-embed {
+      width: 100%;
+      height: 500px;
+      margin: 20px 0;
+      border: 1px solid #ccc;
+    }
 
-        .section h2 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            color: #2e8b57;
-            border-bottom: 2px solid #2e8b57;
-            display: inline-block;
-            padding-bottom: 5px;
-        }
+    footer {
+        background-color: #1e3a8a;
+        color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 1em;
+    }
 
-        /* Footer Styles */
-        footer {
-            background-color: #2e8b57;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            font-size: 1.1em;
-            margin-top: 40px;
-        }
+    footer a {
+        color: #dbeafe;
+      text-decoration: none;
+      margin: 0 10px;
+    }
 
-        footer a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 10px;
-        }
+    footer a:hover {
+        color: white;
+      text-decoration: underline;
+    }
 
-        footer a:hover {
-            text-decoration: underline;
-        }
+    @media (max-width: 768px) {
+      .project-video {
+        max-width: 100%;
+        flex: 1 1 100%;
+      }
 
-        /* Embedded PDF Styles */
-        .pdf-embed {
-            width: 90%;
-            height: 600px;
-            margin: 20px 0;
-            border: none;
-        }
+      .section {
+        padding: 30px 15px;
+      }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            header {
-                padding: 20px;
-            }
+      header h1 {
+        font-size: 2.3em;
+      }
 
-            header h1 {
-                font-size: 2.5em;
-            }
-
-            /* Hide the headshot on smaller screens */
-            header .headshot {
-                display: none;
-            }
-
-            /* Center the name when the headshot is hidden */
-            header .name-and-headshot h1 {
-                margin-left: 0;
-            }
-
-            nav {
-                padding: 10px 0;
-            }
-
-            nav a {
-                font-size: 1em;
-                margin: 0 10px;
-            }
-
-            .section {
-                padding: 20px;
-            }
-
-            .pdf-embed {
-                height: 500px;
-            }
-        }
-
-        /* Embedded Video Styles */
-        .video-container {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .project-video {
-            width: 48%; /* Make the video fit within the width */
-            height: auto;
-            max-height: 400px;
-        }
-    </style>
+      nav a,
+      .blog-btn {
+        font-size: 0.95em;
+        margin: 0 6px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Navigation Bar -->
-    <nav>
-        <a href="#current-project">RoboSim (in progress)</a>
-        <a href="#orbslam">ORBSLAM Augmentation</a>
-        <a href="#compiler">C Compiler in OCaml</a>
-        <a href="#robotics">Bucket System</a>
-        <a href="blog-art.html" class="blog-btn" target="_blank">Other things</a>
-    </nav>
+  <!-- Navigation Bar -->
+  <nav>
+    <a href="#current-project">RoboSim</a>
+    <a href="#orbslam">ORBSLAM Augmentation</a>
+    <a href="#compiler">C Compiler</a>
+    <a href="#robotics">Robotics System</a>
+    <a href="blog-art.html" class="blog-btn" target="_blank">Other Things</a>
+  </nav>
 
-    <!-- Header Section -->
-    <header>
-        <div class="name-and-headshot">
-            <h1>Katia's project blog</h1>
-        </div>
-        <p>A record of my favorite projects I've worked on over the last 2 years</p>
-    </header>
+  <!-- Header -->
+  <header>
+    <h1>Katia's Project Blog</h1>
+    <p>A record of my favorite projects I've worked on over the last 2 years</p>
+  </header>
 
-    <!-- Sections -->
-    <div id="current-project" class="section">
-        <h2>RoboSim</h2>
-        <div class="project">
-            <p>Being updated ... </p>
-            <div class="links">
-                <a href="https://github.com/your-repo" target="_blank">GitHub Code</a>
-            </div>
-        </div>
+  <!-- Fluid Sim -->
+  <section id="current-project" class="section">
+    <h2>Fluid Simulator</h2>
+    <p>
+      Currently developing and optimizing a parallelized fluid particle simulator using the FLIP method and a semi-Lagrangian style of simulation. The simulator is CUDA-accelerated and benchmarked against its sequential version.
+    </p>
+    <embed src="https://kn1451j.github.io/ParallelFluidSim/" class="pdf-embed" />
+    <div class="links">
+      <a href="https://github.com/kn1451j/ParallelFluidSim" target="_blank">GitHub Code</a>
     </div>
+  </section>
 
-    <div id="orbslam" class="section">
-        <h2>ORBSLAM Augmentation</h2>
-        <div class="project-description">
-            <p>For this project, I updated the ORBSLAM repository with ROS2 capabilities to provide an interface between SAM2 detection and segmentation of dynamic objects, which is run in parallel with the main system.
-                I implemented an additional SLAM component that tracks the positions of these labelled and segmented dynamic objects, using the detections to guide the original static system to ignore keypoints detected on the
-                dynamic objects when reducing reprojection loss between views and performing bundle adjustment. I hope to eventually continue this project by using the dynamic object positions and predicted motions to aid in the 
-                optimization process, rather than being masked.
-            </p>
-            <div class="links">
-                <a href="https://github.com/kn1451j/DynORBBase" target="_blank">GitHub Code</a>
-            </div>
-        </div>
-        <embed src="stuff/proj_report.pdf" type="application/pdf" class="pdf-embed" />
-        <div class="video-container">
-            <video class="project-video" controls>
-                <source src="stuff/xyz_walking_demo_base_orbslam.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <video class="project-video" controls>
-                <source src="stuff/xyz_walking_demo_samplus_orbslam.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
+  <!-- ORBSLAM Augmentation -->
+  <section id="orbslam" class="section">
+    <h2>ORBSLAM Augmentation</h2>
+    <p>
+      Added ROS2 capabilities to ORBSLAM for dynamic object segmentation using SAM2. Integrated a tracking system for dynamic objects, enabling the SLAM algorithm to ignore moving keypoints during reprojection and bundle adjustment.
+    </p>
+    <div class="links">
+      <a href="https://github.com/kn1451j/DynORBBase" target="_blank">GitHub Code</a>
     </div>
+    <embed src="stuff/proj_report.pdf" type="application/pdf" class="pdf-embed" />
+    <div class="video-container">
+      <video class="project-video" controls>
+        <source src="stuff/xyz_walking_demo_base_orbslam.mp4" type="video/mp4" />
+      </video>
+      <video class="project-video" controls>
+        <source src="stuff/xyz_walking_demo_samplus_orbslam.mp4" type="video/mp4" />
+      </video>
+    </div>
+  </section>
 
-    <div id="robotics" class="section">
-        <h2>RoboSubmarine Mapping (Bucket) System</h2>
-        <p>My robotics interest started with CMU's Robotic Submarine team, where I was one of the founding members. My work for the team involved implementing a large chunk of our perception stack - including camera driver code for our OAKDs - and our entire mapping system in C++, Python, and ROS1.</p>
-        <div class="links">
-            <a href="https://www.cs.cmu.edu/news/2022/students-relaunch-robotic-sub-team" target="_blank">Article about team founding</a>
-            <a href="https://github.com/Tartan-AUV/tauv-mono" target="_blank">Team Repo</a>
-            <a href="https://www.tartanauv.com/" target="_blank">Team Website</a>
-        </div>
-        <div class="project">
-            <video class="project-video" controls>
-                <source src="stuff/bucket_system_demo.mov" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <p> This is a simulated demo of the mapping code, which matches noisy feature detections (spheres) to "buckets" (cubes), which are Kalman Filter objects tracking the predicted positions of the features, and are dynamically managed using iterative culling and time-based decay.</p>
-            <a href="https://github.com/Tartan-AUV/tauv-mono/tree/develop/packages/tauv_common/src/global_map_cpp" target="_blank">Code link</a>
-        </div>
+  <!-- Robotics Mapping -->
+  <section id="robotics" class="section">
+    <h2>RoboSub Mapping System</h2>
+    <p>
+      Developed the perception and mapping systems for CMU's Robotic Submarine team. Wrote camera drivers and implemented Kalman-filter-based tracking with decay and culling. Written in C++, Python, and ROS1.
+    </p>
+    <div class="links">
+      <a href="https://www.cs.cmu.edu/news/2022/students-relaunch-robotic-sub-team" target="_blank">Team Article</a>
+      <a href="https://github.com/Tartan-AUV/tauv-mono" target="_blank">Repo</a>
+      <a href="https://www.tartanauv.com/" target="_blank">Team Site</a>
     </div>
+    <video class="project-video" controls>
+      <source src="stuff/bucket_system_demo.mov" type="video/mp4" />
+    </video>
+    <p>
+      This simulation demonstrates how noisy feature detections are matched to persistent "buckets" (Kalman-filtered objects), which decay or are culled dynamically.
+      <a href="https://github.com/Tartan-AUV/tauv-mono/tree/develop/packages/tauv_common/src/global_map_cpp" target="_blank">Code Link</a>
+    </p>
+  </section>
 
-    <div id="compiler" class="section">
-        <h2>C Compiler in OCaml</h2>
-        <div class="project-description">
-            <p>These are the final two reports from the semester-long project of implementing a C compiler in OCaml from scratch. Our compiled code nearly matched the efficiency of compiled code from GCC on the -O1 optimization flag. 
-                The optimizations we implemented are described in the Lab 5 writeup.
-                For our elected final component of the compiler - as described in the Lab 6 report - we added a garbage collection system.
-            </p>
-            <!-- Embedded PDFs side by side -->
-            <div style="display: flex; justify-content: space-between; gap: 20px;">
-                <embed src="stuff/compilerl5.pdf" type="application/pdf" class="pdf-embed" />
-                <embed src="stuff/compilerl6.pdf" type="application/pdf" class="pdf-embed" />
-            </div>
-        </div>
+  <!-- C Compiler -->
+  <section id="compiler" class="section">
+    <h2>C Compiler in OCaml</h2>
+    <p>
+      Semester-long project building a C compiler in OCaml. Reached performance near GCC -O1. Final stages added garbage collection and multiple optimizations.
+    </p>
+    <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+      <embed src="stuff/compilerl5.pdf" class="pdf-embed" />
+      <embed src="stuff/compilerl6.pdf" class="pdf-embed" />
     </div>
+  </section>
 
-    <div id="other" class="section">
-        <!-- Resume Section -->
-    <div id="resume">
-        <h2>Resume</h2>
-        <embed src="stuff/shortresnew.pdf" type="application/pdf" class="pdf-embed" />
-    </div>
-    </div>
-<!-- 
-    <div id="cmu-poster" class="section">
-        <h2>Extraneous ML Research</h2>
-        <div class="project">
-            <img src="stuff/research.jpg" class="pdf-embed" />
-        </div>
-        <embed src="stuff/mloverview.pdf" type="application/pdf" class="pdf-embed" />
-    </div> -->
+  <!-- Resume -->
+  <section id="resume" class="section">
+    <h2>Resume</h2>
+    <embed src="stuff/shortresnew.pdf" type="application/pdf" class="pdf-embed" />
+  </section>
 
-    <!-- Footer Section -->
-    <footer>
-        <p>
-            <a href="https://www.linkedin.com/in/katerina-nikiforova-240881229/" target="_blank">LinkedIn</a> |
-            <a href="https://github.com/kn1451j" target="_blank">GitHub</a>
-        </p>
-    </footer>
+  <!-- Footer -->
+  <footer>
+    <p>
+      <a href="https://www.linkedin.com/in/katerina-nikiforova-240881229/" target="_blank">LinkedIn</a> |
+      <a href="https://github.com/kn1451j" target="_blank">GitHub</a>
+    </p>
+  </footer>
 
 </body>
 </html>
