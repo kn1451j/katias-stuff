@@ -31,6 +31,27 @@
     padding: 60px 20px 40px;
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Text block and the spinning figure sit side by side, the pair centred. */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 45px;
+    flex-wrap: wrap;
+    }
+
+    /* The gif is white ink on black rather than transparency; screen drops the
+       black against the blue while keeping the antialiased ink edges.
+       (1-bit gif transparency would fringe them.) */
+    .header-spin {
+      height: 175px;
+      width: auto;
+      flex-shrink: 0;
+      mix-blend-mode: screen;
+    }
+
+    /* Shown only under prefers-reduced-motion, in place of the looping gif. */
+    .header-spin-still {
+      display: none;
     }
 
     header h1 {
@@ -241,34 +262,11 @@
       }
     }
 
-    /* A spinning figure bookends the strip on each side. */
-    .banner-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 22px;
-      margin-bottom: 30px;
-    }
-
-    /* Same white-background gif as elsewhere; multiply drops the white against
-       the panel while keeping the antialiased ink edges. */
-    .banner-spin {
-      height: 150px;
-      width: auto;
-      flex-shrink: 0;
-      mix-blend-mode: multiply;
-    }
-
-    /* Shown only under prefers-reduced-motion, in place of the looping gif. */
-    .banner-spin-still {
-      display: none;
-    }
-
     .subspace-banner {
       display: block;
       width: 100%;
       max-width: 1000px;
-      min-width: 0;
+      margin: 0 auto 30px;
       height: auto;
     }
 
@@ -338,11 +336,11 @@
       }
 
       /* A gif loops forever and can't be paused, so swap in a single frame. */
-      .banner-spin {
+      .header-spin {
         display: none;
       }
 
-      .banner-spin-still {
+      .header-spin-still {
         display: block;
       }
     }
@@ -367,12 +365,12 @@
         margin: 0 6px;
       }
 
-      .banner-row {
-        gap: 10px;
+      header {
+        gap: 18px;
       }
 
-      .banner-spin {
-        height: 80px;
+      .header-spin {
+        height: 100px;
       }
 
       .subspace-intro p,
@@ -400,31 +398,31 @@
 
   <!-- Header -->
   <header>
-    <h1>Katia's Project Blog</h1>
-    <p>A record of my favorite projects I've worked on</p>
-    <button type="button" id="subspace-toggle" class="subspace-btn"
-            aria-expanded="false" aria-controls="subspace">my subspace &#9661;</button>
+    <img class="header-spin" src="stuff/spinning-man-light.gif"
+         alt="A hand-drawn figure turning slowly in place" />
+    <img class="header-spin header-spin-still" src="stuff/spinning-man-light-still.png"
+         alt="" aria-hidden="true" />
+
+    <div class="header-text">
+      <h1>Katia's Project Blog</h1>
+      <p>A record of my favorite projects I've worked on</p>
+      <button type="button" id="subspace-toggle" class="subspace-btn"
+              aria-expanded="false" aria-controls="subspace">my subspace &#9661;</button>
+    </div>
+
+    <!-- Same animation half a revolution out of phase. Browsers sync two
+         <img>s sharing one gif url, and the two edge-on frames would then
+         land together, briefly leaving the header with no figures at all. -->
+    <img class="header-spin" src="stuff/spinning-man-light-b.gif"
+         alt="" aria-hidden="true" />
+    <img class="header-spin header-spin-still" src="stuff/spinning-man-light-b-still.png"
+         alt="" aria-hidden="true" />
   </header>
 
   <!-- My Subspace -->
   <section id="subspace" class="subspace section">
-    <div class="banner-row">
-      <img class="banner-spin" src="stuff/spinning-man.gif"
-           alt="A hand-drawn figure turning slowly in place" />
-      <img class="banner-spin banner-spin-still" src="stuff/spinning-man-still.png"
-           alt="" aria-hidden="true" />
-
-      <img class="subspace-banner" src="stuff/subspace-figures.png"
-           alt="A row of hand-drawn figures, several scribbled out, one reduced to a single line" />
-
-      <!-- Same animation half a revolution out of phase. Browsers sync two
-           <img>s sharing one gif url, and the two edge-on frames would then
-           land together, briefly leaving the strip with no bookends at all. -->
-      <img class="banner-spin" src="stuff/spinning-man-b.gif"
-           alt="" aria-hidden="true" />
-      <img class="banner-spin banner-spin-still" src="stuff/spinning-man-b-still.png"
-           alt="" aria-hidden="true" />
-    </div>
+    <img class="subspace-banner" src="stuff/subspace-figures.png"
+         alt="A row of hand-drawn figures, several scribbled out, one reduced to a single line" />
 
     <div class="subspace-intro">
       <p>
