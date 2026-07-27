@@ -198,7 +198,17 @@
     /* .subspace-open controls whether the panel is laid out; .subspace-on controls
        the grayscale. They are separate so that on close the panel can slide up
        while the colour is still fading back in. */
+    /* The panel sits below the header in the stacking order so that the slide-up
+       disappears behind the blue header rather than sliding over it. The header
+       needs position for z-index to take effect. */
+    header {
+      position: relative;
+      z-index: 2;
+    }
+
     .subspace {
+      position: relative;
+      z-index: 1;
       display: none;
       background-color: #f4f4f4;
       color: #2b2b2b;
@@ -423,7 +433,7 @@
           same as compatibility or alignment? I will perhaps never share the same views or
           perspectives as my family, on most things - my parents grew up in the Soviet Union and my
           brother in Russia. Their experiences of life are painted so fundamentally differently
-          than mine, an American girl born and raised in the Florida Keys (a tropical island where
+          than mine, an American born and raised in the Florida Keys (a tropical island where
           more than half the residents at a time were tourists). Structurally, our life experiences
           in every realm - but perhaps familial - have coated our general perspectives to be very
           different. Yet the feeling itself does seem to come from an understanding of their
