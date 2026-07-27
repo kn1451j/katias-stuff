@@ -154,11 +154,11 @@
     header,
     footer,
     .section {
-      transition: filter 0.6s ease;
+      transition: filter 1.8s ease;
     }
 
     nav {
-      transition: background-color 0.6s ease;
+      transition: background-color 1.8s ease;
     }
 
     body.subspace-on > header,
@@ -183,9 +183,9 @@
       border: 2px solid #ffffff;
       border-radius: 25px;
       padding: 10px 22px;
-      font-family: inherit;
-      font-size: 1.05em;
-      font-weight: 600;
+      font-family: 'KatiaHand', 'Nunito', sans-serif;
+      font-size: 1.3em;
+      font-weight: 400;
       cursor: pointer;
       transition: all 0.3s ease;
     }
@@ -195,17 +195,29 @@
       color: #3f3f3f;
     }
 
+    /* .subspace-open controls whether the panel is laid out; .subspace-on controls
+       the grayscale. They are separate so that on close the panel can slide up
+       while the colour is still fading back in. */
     .subspace {
       display: none;
-    }
-
-    body.subspace-on .subspace {
-      display: block;
-      min-height: 100vh;
       background-color: #f4f4f4;
       color: #2b2b2b;
       font-family: 'KatiaHand', 'Nunito', sans-serif;
-      animation: subspace-unfold 0.7s ease both;
+    }
+
+    body.subspace-open .subspace {
+      display: block;
+      min-height: 100vh;
+      animation: subspace-unfold 1.4s ease both;
+    }
+
+    /* Closing: the script pins the panel's measured height, then drives it to 0.
+       min-height has to be released here or it would win over max-height. */
+    body.subspace-open .subspace.collapsing {
+      min-height: 0;
+      overflow: hidden;
+      animation: none;
+      transition: max-height 1.4s ease, opacity 1.4s ease, transform 1.4s ease;
     }
 
     @keyframes subspace-unfold {
@@ -284,8 +296,12 @@
         transition: none;
       }
 
-      body.subspace-on .subspace {
+      body.subspace-open .subspace {
         animation: none;
+      }
+
+      body.subspace-open .subspace.collapsing {
+        transition: none;
       }
     }
 
@@ -541,15 +557,53 @@
     (function () {
       var btn = document.getElementById('subspace-toggle');
       var panel = document.getElementById('subspace');
+      var body = document.body;
+      var SLIDE_MS = 1400;
+      var closing = false;
+
+      function label(open) {
+        btn.innerHTML = open ? 'back to projects &#9651;' : 'my subspace &#9661;';
+        btn.setAttribute('aria-expanded', String(open));
+      }
 
       btn.addEventListener('click', function () {
-        var on = document.body.classList.toggle('subspace-on');
-        btn.setAttribute('aria-expanded', String(on));
-        btn.innerHTML = on ? 'back to projects &#9651;' : 'my subspace &#9661;';
-        if (on) {
-          var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (closing) return;
+
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (!body.classList.contains('subspace-open')) {
+          body.classList.add('subspace-open');
+          body.classList.add('subspace-on');
+          label(true);
           panel.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+          return;
         }
+
+        // Closing: drop the grayscale and slide the panel up at the same time.
+        label(false);
+        body.classList.remove('subspace-on');
+
+        if (reduce) {
+          body.classList.remove('subspace-open');
+          return;
+        }
+
+        closing = true;
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+        panel.classList.add('collapsing');
+        void panel.offsetHeight;              // flush styles so the transition runs
+        panel.style.maxHeight = '0px';
+        panel.style.opacity = '0';
+        panel.style.transform = 'translateY(-24px)';
+
+        window.setTimeout(function () {
+          body.classList.remove('subspace-open');
+          panel.classList.remove('collapsing');
+          panel.style.maxHeight = '';
+          panel.style.opacity = '';
+          panel.style.transform = '';
+          closing = false;
+        }, SLIDE_MS);
       });
     })();
   </script>
