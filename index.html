@@ -6,6 +6,15 @@
   <title>Katia's Stuff</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&display=swap" rel="stylesheet" />
   <style>
+    /* Handwriting Font */
+    @font-face {
+      font-family: 'KatiaHand';
+      src: url('fonts/KatiaHand-Regular.woff2') format('woff2'),
+           url('fonts/KatiaHand-Regular.ttf') format('truetype');
+      font-weight: 400;
+      font-display: swap;
+    }
+
     /* Global Styles */
     body {
       font-family: 'Nunito', sans-serif;
@@ -138,6 +147,148 @@
       text-decoration: underline;
     }
 
+    /* Subspace Mode */
+    /* Grayscale is applied per top-level block. The sticky <nav> is greyed with an
+       explicit colour instead of a filter, so no filter is ever applied to the
+       sticky element. #3d3d3d is exactly what grayscale(1) yields for #243c94. */
+    header,
+    footer,
+    .section {
+      transition: filter 0.6s ease;
+    }
+
+    nav {
+      transition: background-color 0.6s ease;
+    }
+
+    body.subspace-on > header,
+    body.subspace-on > footer,
+    body.subspace-on > .section {
+      filter: grayscale(1);
+    }
+
+    body.subspace-on > nav {
+      background-color: #3d3d3d;
+    }
+
+    body.subspace-on nav a:hover {
+      background-color: #3a3a3a;
+    }
+
+    .subspace-btn {
+      display: block;
+      margin: 20px auto 0;
+      background-color: #3f3f3f;
+      color: #ffffff;
+      border: 2px solid #ffffff;
+      border-radius: 25px;
+      padding: 10px 22px;
+      font-family: inherit;
+      font-size: 1.05em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .subspace-btn:hover {
+      background-color: #ffffff;
+      color: #3f3f3f;
+    }
+
+    .subspace {
+      display: none;
+    }
+
+    body.subspace-on .subspace {
+      display: block;
+      min-height: 100vh;
+      background-color: #f4f4f4;
+      color: #2b2b2b;
+      font-family: 'KatiaHand', 'Nunito', sans-serif;
+      animation: subspace-unfold 0.7s ease both;
+    }
+
+    @keyframes subspace-unfold {
+      from {
+        opacity: 0;
+        transform: translateY(-14px);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .subspace-banner {
+      display: block;
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto 30px;
+      height: auto;
+    }
+
+    .subspace-intro p {
+      font-size: 1.35em;
+      line-height: 1.75;
+    }
+
+    .entry {
+      border: 2px solid #2b2b2b;
+      border-radius: 25px;
+      margin-bottom: 14px;
+      background-color: #fbfbfb;
+    }
+
+    .entry > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 12px 24px;
+      font-size: 1.4em;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+    }
+
+    .entry > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .entry > summary::after {
+      content: ' \25BD';
+    }
+
+    .entry[open] > summary::after {
+      content: ' \25B3';
+    }
+
+    .entry > summary:hover {
+      background-color: #e6e6e6;
+    }
+
+    .entry-body {
+      padding: 0 30px 20px;
+      font-size: 1.3em;
+      line-height: 1.8;
+    }
+
+    .entry-body.placeholder {
+      color: #777;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      nav,
+      header,
+      footer,
+      .section,
+      .subspace-btn,
+      .entry > summary {
+        transition: none;
+      }
+
+      body.subspace-on .subspace {
+        animation: none;
+      }
+    }
+
     @media (max-width: 768px) {
       .project-video {
         max-width: 100%;
@@ -157,6 +308,16 @@
         font-size: 0.95em;
         margin: 0 6px;
       }
+
+      .subspace-intro p,
+      .entry-body {
+        font-size: 1.15em;
+      }
+
+      .entry > summary {
+        font-size: 1.2em;
+        padding: 10px 18px;
+      }
     }
   </style>
 </head>
@@ -175,7 +336,113 @@
   <header>
     <h1>Katia's Project Blog</h1>
     <p>A record of my favorite projects I've worked on</p>
+    <button type="button" id="subspace-toggle" class="subspace-btn"
+            aria-expanded="false" aria-controls="subspace">my subspace &#9661;</button>
   </header>
+
+  <!-- My Subspace -->
+  <section id="subspace" class="subspace section">
+    <img class="subspace-banner" src="stuff/subspace-figures.png"
+         alt="A row of hand-drawn figures, several scribbled out, one reduced to a single line" />
+
+    <div class="subspace-intro">
+      <p>
+        I am on a mission to completely publicize my personal journal and make all of my
+        thoughts public because I want to 1. improve as a communicator 2. connect with
+        people about ideas and hopefully in the process refine my internal world models
+      </p>
+      <p>
+        I don&rsquo;t really know how to communicate these types of ideas. They are not widespread
+        in my daily conversations and I don&rsquo;t get to talk about these kinds of things that much.
+        So I&rsquo;ll try to walk through examples, but maybe they&rsquo;re trivial and people understand
+        this already. Anyways, I&rsquo;d love feedback on these thoughts and ideas. Almost everything
+        I put in my journal has been post-processed and is not touchy. Honestly things are
+        generally not touchy.
+      </p>
+      <p>
+        At this point, everything here is unpolished and idea sketches. Many of the ideas used
+        within the writing I have fundamentally internalized and might seem like baseless claims
+        (e.g. the idea of neutrality in any life), but I plan to start dedicating weekly time to
+        refine these thoughts into something more presentable.
+      </p>
+    </div>
+
+    <!-- Entry template: copy one <details class="entry"> block to add new writing -->
+    <details class="entry">
+      <summary>What is love made of?</summary>
+      <div class="entry-body">
+        <p>
+          I&rsquo;ve been thinking about the material properties of love. As in, how can we best
+          characterize love in the way we characterize objects in our world?
+        </p>
+        <p>
+          Is it a rigid substance? If so, is familial love and romantic and platonic love all
+          fundamentally made of the same substance, with different lived experiences giving it
+          different compositions, different coatings and paints? Or is love more abstract, like a
+          tube that allows different liquids to flow through it? Perhaps love is the facilitation,
+          the space to create these exchanges rather than a thing.
+        </p>
+        <p>
+          Maybe love is an opening.
+        </p>
+        <p>
+          When I think about how I have experienced familial love, versus platonic love, is the
+          fundamental emotion the same? The fundamental grounding for love is certainly shared
+          experience - the ability to understand a human must come from a sense of alignment in
+          some form, either through lived or communicated experience. I understand this through a
+          popular idea in language theory - some set of mutual exchanges to arrive at something
+          called a &ldquo;fixed point&rdquo; where two individuals can both assert that they mean the same
+          thing. For example, two individuals from different countries and different languages
+          might want to make sure they mean the same thing when one says the word &ldquo;banana&rdquo; and one
+          says &ldquo;banan&rdquo;. This can happen through some set of actions where the terminal exchange and
+          therefore understanding is reached when both individuals have convincingly demonstrated
+          to each other that the other one indeed means what they mean. For example, one picks up
+          a banana, one says banan, and the other banana. The exchange terminates with mutual
+          agreement. The same identification could have been achieved if the individuals had
+          together discovered a banana for the first time together, in addition to the shared
+          connection over their full (live) demonstration of each other&rsquo;s discovery.
+        </p>
+        <p>
+          Shared experience creates the opening for mutually understood communication. Is this the
+          same as compatibility or alignment? I will perhaps never share the same views or
+          perspectives as my family, on most things - my parents grew up in the Soviet Union and my
+          brother in Russia. Their experiences of life are painted so fundamentally differently
+          than mine, an American girl born and raised in the Florida Keys (a tropical island where
+          more than half the residents at a time were tourists). Structurally, our life experiences
+          in every realm - but perhaps familial - have coated our general perspectives to be very
+          different. Yet the feeling itself does seem to come from an understanding of their
+          experience, or at least an openness to it.
+        </p>
+        <p>
+          The love I feel for my family feels deeply weighed, weighed with years of baggage and
+          shared experience and injected with pain and judgement. It feels heavy, and intimate in a
+          very different way than platonic love. But the fundamental feeling of familiarity, the
+          feeling that falls beneath all of the noise and weight - that might be the same for
+          platonic and familial.
+        </p>
+        <p>
+          Maybe we have different substrates flowing through the opening created by our familial
+          love and romantic love, which makes our experience of love so different. But the
+          fundamental construction of these experiences is rooted in the same opening, jarred,
+          hammered, and carved open through different ways for each relationship.
+        </p>
+      </div>
+    </details>
+
+    <details class="entry">
+      <summary>a layered view</summary>
+      <div class="entry-body placeholder">
+        <p>coming soon</p>
+      </div>
+    </details>
+
+    <details class="entry">
+      <summary>utopia</summary>
+      <div class="entry-body placeholder">
+        <p>coming soon</p>
+      </div>
+    </details>
+  </section>
 
   <!-- Education -->
   <section id="education" class="section">
@@ -269,6 +536,23 @@
       <a href="https://github.com/kn1451j" target="_blank">GitHub</a>
     </p>
   </footer>
+
+  <script>
+    (function () {
+      var btn = document.getElementById('subspace-toggle');
+      var panel = document.getElementById('subspace');
+
+      btn.addEventListener('click', function () {
+        var on = document.body.classList.toggle('subspace-on');
+        btn.setAttribute('aria-expanded', String(on));
+        btn.innerHTML = on ? 'back to projects &#9651;' : 'my subspace &#9661;';
+        if (on) {
+          var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          panel.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+        }
+      });
+    })();
+  </script>
 
 </body>
 </html>
