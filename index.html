@@ -365,8 +365,16 @@
         margin: 0 6px;
       }
 
+      /* Narrow screens get a single figure stacked above the title — two
+         side by side would squeeze the text into a column. Hiding the
+         second one also makes its phase offset moot. */
       header {
+        flex-direction: column;
         gap: 18px;
+      }
+
+      .header-spin-b {
+        display: none;
       }
 
       .header-spin {
@@ -413,9 +421,9 @@
     <!-- Same animation half a revolution out of phase. Browsers sync two
          <img>s sharing one gif url, and the two edge-on frames would then
          land together, briefly leaving the header with no figures at all. -->
-    <img class="header-spin" src="stuff/spinning-man-light-b.gif"
+    <img class="header-spin header-spin-b" src="stuff/spinning-man-light-b.gif"
          alt="" aria-hidden="true" />
-    <img class="header-spin header-spin-still" src="stuff/spinning-man-light-b-still.png"
+    <img class="header-spin header-spin-still header-spin-b" src="stuff/spinning-man-light-b-still.png"
          alt="" aria-hidden="true" />
   </header>
 
@@ -486,8 +494,7 @@
           same as compatibility or alignment? I will perhaps never share the same views or
           perspectives as my family, on most things - my parents grew up in the Soviet Union and my
           brother in Russia. Their experiences of life are painted so fundamentally differently
-          than mine, an American born and raised in the Florida Keys (a tropical island where
-          more than half the residents at a time were tourists). Structurally, our life experiences
+          than mine, an American born and raised in the Florida Keys. Structurally, our life experiences
           in every realm - but perhaps familial - have coated our general perspectives to be very
           different. Yet the feeling itself does seem to come from an understanding of their
           experience, or at least an openness to it.
