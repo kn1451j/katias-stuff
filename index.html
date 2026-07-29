@@ -172,20 +172,28 @@
     /* Grayscale is applied per top-level block. The sticky <nav> is greyed with an
        explicit colour instead of a filter, so no filter is ever applied to the
        sticky element. #3d3d3d is exactly what grayscale(1) yields for #243c94. */
-    header,
     footer,
     .section {
       transition: filter 1.8s ease;
     }
 
-    nav {
+    /* The header is greyed with a colour rather than a filter for a second
+       reason: a filtered element becomes the containing block for any
+       position: fixed descendant, which would pin the subspace button inside
+       the header instead of to the viewport. #3a3a3a is exactly what
+       grayscale(1) yields for #1e3a8a. */
+    nav,
+    header {
       transition: background-color 1.8s ease;
     }
 
-    body.subspace-on > header,
     body.subspace-on > footer,
     body.subspace-on > .section {
       filter: grayscale(1);
+    }
+
+    body.subspace-on > header {
+      background-color: #3a3a3a;
     }
 
     body.subspace-on > nav {
@@ -196,9 +204,30 @@
       background-color: #3a3a3a;
     }
 
+    /* In subspace mode the button leaves the flow and rides just under the
+       sticky nav. The slot keeps the space it vacated, so the header doesn't
+       reflow underneath it; both custom properties are measured in script,
+       since the nav's height changes with the breakpoint. */
+    .subspace-btn-slot {
+      margin-top: 20px;
+    }
+
+    body.subspace-on .subspace-btn-slot {
+      height: var(--btn-h, 52px);
+    }
+
+    body.subspace-on .subspace-btn {
+      position: fixed;
+      top: var(--nav-h, 45px);
+      left: 50%;
+      transform: translateX(-50%);
+      margin: 0;
+      z-index: 120;
+    }
+
     .subspace-btn {
       display: block;
-      margin: 20px auto 0;
+      margin: 0 auto;
       background-color: #3f3f3f;
       color: #ffffff;
       border: 2px solid #ffffff;
@@ -317,59 +346,140 @@
       color: #777;
     }
 
-    /* Drawings scattered between the projects and between the writing entries.
-       They belong to subspace mode: collapsed to nothing and transparent while
-       the page is in colour, unfolding as the grayscale fades in. The 0fr/1fr
-       row is what animates the height without hard-coding one per drawing. */
+    /* Drawings, in two flavours: .doodle-panel sits inline beside a writing
+       entry, .doodle-side hangs in the margin next to a project. Both belong
+       to subspace mode — transparent until the grayscale fades in. */
     .doodle {
-      display: grid;
-      grid-template-rows: 0fr;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 20px;
-      overflow: hidden;
       opacity: 0;
       pointer-events: none;
-      transition: grid-template-rows 1.8s ease, opacity 1.8s ease;
+      transition: opacity 1.8s ease;
     }
 
     body.subspace-on .doodle {
-      grid-template-rows: 1fr;
       opacity: 1;
     }
 
-    /* min-height: 0 is what lets the 0fr row actually clamp the image.
-       The vertical margin lives on the image, not the container, so it
-       collapses along with the row instead of leaving a gap behind. */
-    .doodle > img {
-      min-height: 0;
-      height: auto;
+    /* Each drawing is the clean version with its noise twin stacked on top.
+       Same canvas dimensions, so the overlay lines up without any nudging. */
+    .doodle-art {
+      position: relative;
+    }
+
+    .doodle-art img {
       display: block;
-      margin: 45px 0;
-      transform: rotate(var(--rot, 0deg)) translateY(16px);
+      width: 100%;
+      height: auto;
+    }
+
+    .doodle-noise {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 0.55s ease;
+    }
+
+    /* Flipping between the two versions at ~8fps gives the line the boil of
+       hand-drawn animation. steps(1) keeps each state flat instead of
+       cross-fading, which is what makes it read as redrawn rather than blurred. */
+    @keyframes doodle-boil {
+      0%   { opacity: 0.9; transform: translate(0, 0); }
+      25%  { opacity: 0.3; transform: translate(0.7px, -0.6px); }
+      50%  { opacity: 1;   transform: translate(-0.6px, 0.5px); }
+      75%  { opacity: 0.5; transform: translate(0.4px, 0.7px); }
+    }
+
+    /* Noise runs while the page is moving, and — for a drawing paired with a
+       writing entry — for as long as that entry stays shut. Open the writing
+       and its drawing settles. */
+    body.scrolling .doodle-noise,
+    .pair:not(.pair-open) .doodle-noise {
+      opacity: 1;
+      animation: doodle-boil 0.5s steps(1) infinite;
+    }
+
+    /* --- Beside the writing entries --------------------------------------- */
+
+    /* The 0fr/1fr row animates the drawing's height on open without any
+       hard-coded value; min-height: 0 is what lets the row actually clamp it. */
+    .doodle-panel {
+      display: grid;
+      grid-template-rows: 0fr;
+      overflow: hidden;
+      transition: grid-template-rows 1.8s ease, opacity 1.8s ease;
+    }
+
+    body.subspace-on .doodle-panel {
+      grid-template-rows: 1fr;
+    }
+
+    .doodle-panel > .doodle-art {
+      min-height: 0;
+      transform: rotate(var(--rot, 0deg)) translateY(14px);
       transition: transform 1.8s ease;
     }
 
-    body.subspace-on .doodle > img {
+    body.subspace-on .doodle-panel > .doodle-art {
       transform: rotate(var(--rot, 0deg));
     }
 
-    /* Alternating sides down the page, never centred; widths vary so the
-       run of them reads as hand-placed rather than as a column. */
-    .doodle-l > img {
-      margin-right: auto;
+    /* Drawing and dropdown share a row, sides alternating down the panel.
+       The entry takes whatever the drawing leaves. */
+    .pair {
+      display: flex;
+      align-items: flex-start;
+      gap: 28px;
+      margin-bottom: 14px;
     }
 
-    .doodle-r > img {
-      margin-left: auto;
+    .pair-r {
+      flex-direction: row-reverse;
     }
 
-    .doodle-1 > img { width: 44%; --rot: -2.5deg; }
-    .doodle-2 > img { width: 38%; --rot: 2deg; }
-    .doodle-3 > img { width: 58%; --rot: 1.5deg; }
-    .doodle-4 > img { width: 50%; --rot: -1.5deg; }
-    .doodle-5 > img { width: 46%; --rot: 2.5deg; }
-    .doodle-6 > img { width: 62%; --rot: -1deg; }
+    .pair > .doodle-panel {
+      flex: 0 0 42%;
+    }
+
+    .pair > .entry {
+      flex: 1 1 0;
+      min-width: 0;
+      margin-bottom: 0;
+    }
+
+    .doodle-1 { --rot: -2.5deg; }
+    .doodle-2 { --rot: 2deg; }
+    .doodle-3 { --rot: 1.5deg; }
+
+    /* --- Beside the projects ---------------------------------------------- */
+
+    /* Zero height, and the art itself is absolutely positioned clear of the
+       content column, so a project's layout is identical whether subspace mode
+       is on or off. The wrapper matches the section's outer width (1000px box
+       + 20px padding each side) so `100%` is exactly the content edge. */
+    .doodle-side {
+      position: relative;
+      height: 0;
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    .doodle-side > .doodle-art {
+      position: absolute;
+      width: min(230px, calc((100vw - 1080px) / 2));
+      transform: translateY(-50%) rotate(var(--rot, 0deg));
+    }
+
+    .doodle-side.doodle-l > .doodle-art {
+      right: calc(100% + 18px);
+    }
+
+    .doodle-side.doodle-r > .doodle-art {
+      left: calc(100% + 18px);
+    }
+
+    .doodle-4 { --rot: -2deg; }
+    .doodle-5 { --rot: 2.5deg; }
+    .doodle-6 { --rot: -1.5deg; }
 
     @media (prefers-reduced-motion: reduce) {
       nav,
@@ -390,12 +500,19 @@
       }
 
       .doodle,
-      .doodle > img {
+      .doodle-panel > .doodle-art,
+      .doodle-noise {
         transition: none;
       }
 
-      .doodle > img {
+      .doodle-panel > .doodle-art {
         transform: rotate(var(--rot, 0deg));
+      }
+
+      /* The noise still shows, it just holds one frame instead of boiling. */
+      body.scrolling .doodle-noise,
+      .pair:not(.pair-open) .doodle-noise {
+        animation: none;
       }
 
       /* A gif loops forever and can't be paused, so swap in a single frame. */
@@ -456,12 +573,28 @@
 
       /* The per-drawing widths are too small to read on a phone; keep the
          left/right alternation but let each one take most of the width. */
-      /* Only the block margins — the auto side margin is what holds the
-         left/right alternation, so the shorthand must not reset it. */
-      .doodle > img {
-        width: 84%;
-        margin-top: 28px;
-        margin-bottom: 28px;
+      /* No room for a drawing and a dropdown side by side; the drawing goes
+         above its entry and both take the full width. */
+      .pair {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .pair > .doodle-panel {
+        flex: 0 0 auto;
+        width: 78%;
+      }
+
+      .pair-r > .doodle-panel {
+        margin-left: auto;
+      }
+    }
+
+    /* Below this there is no margin left to hang a drawing in, and pushing one
+       into the content column is exactly what these are meant to avoid. */
+    @media (max-width: 1300px) {
+      .doodle-side {
+        display: none;
       }
     }
   </style>
@@ -487,8 +620,10 @@
     <div class="header-text">
       <h1>Katia's Project Blog</h1>
       <p>A record of my favorite projects I've worked on</p>
-      <button type="button" id="subspace-toggle" class="subspace-btn"
-              aria-expanded="false" aria-controls="subspace">my subspace &#9661;</button>
+      <div class="subspace-btn-slot">
+        <button type="button" id="subspace-toggle" class="subspace-btn"
+                aria-expanded="false" aria-controls="subspace">my subspace &#9661;</button>
+      </div>
     </div>
 
     <!-- Same animation half a revolution out of phase. Browsers sync two
@@ -527,90 +662,114 @@
       </p>
     </div>
 
-    <!-- Entry template: copy one <details class="entry"> block to add new writing -->
-    <details class="entry">
-      <summary>What is love made of?</summary>
-      <div class="entry-body">
-        <p>
-          I&rsquo;ve been thinking about the material properties of love. As in, how can we best
-          characterize love in the way we characterize objects in our world?
-        </p>
-        <p>
-          Is it a rigid substance? If so, is familial love and romantic and platonic love all
-          fundamentally made of the same substance, with different lived experiences giving it
-          different compositions, different coatings and paints? Or is love more abstract, like a
-          tube that allows different liquids to flow through it? Perhaps love is the facilitation,
-          the space to create these exchanges rather than a thing.
-        </p>
-        <p>
-          Maybe love is an opening.
-        </p>
-        <p>
-          When I think about how I have experienced familial love, versus platonic love, is the
-          fundamental emotion the same? The fundamental grounding for love is certainly shared
-          experience - the ability to understand a human must come from a sense of alignment in
-          some form, either through lived or communicated experience. I understand this through a
-          popular idea in language theory - some set of mutual exchanges to arrive at something
-          called a &ldquo;fixed point&rdquo; where two individuals can both assert that they mean the same
-          thing. For example, two individuals from different countries and different languages
-          might want to make sure they mean the same thing when one says the word &ldquo;banana&rdquo; and one
-          says &ldquo;banan&rdquo;. This can happen through some set of actions where the terminal exchange and
-          therefore understanding is reached when both individuals have convincingly demonstrated
-          to each other that the other one indeed means what they mean. For example, one picks up
-          a banana, one says banan, and the other banana. The exchange terminates with mutual
-          agreement. The same identification could have been achieved if the individuals had
-          together discovered a banana for the first time together, in addition to the shared
-          connection over their full (live) demonstration of each other&rsquo;s discovery.
-        </p>
-        <p>
-          Shared experience creates the opening for mutually understood communication. Is this the
-          same as compatibility or alignment? I will perhaps never share the same views or
-          perspectives as my family, on most things - my parents grew up in the Soviet Union and my
-          brother in Russia. Their experiences of life are painted so fundamentally differently
-          than mine, an American born and raised in the Florida Keys. Structurally, our life experiences
-          in every realm - but perhaps familial - have coated our general perspectives to be very
-          different. Yet the feeling itself does seem to come from an understanding of their
-          experience, or at least an openness to it.
-        </p>
-        <p>
-          The love I feel for my family feels deeply weighed, weighed with years of baggage and
-          shared experience and injected with pain and judgement. It feels heavy, and intimate in a
-          very different way than platonic love. But the fundamental feeling of familiarity, the
-          feeling that falls beneath all of the noise and weight - that might be the same for
-          platonic and familial.
-        </p>
-        <p>
-          Maybe we have different substrates flowing through the opening created by our familial
-          love and romantic love, which makes our experience of love so different. But the
-          fundamental construction of these experiences is rooted in the same opening, jarred,
-          hammered, and carved open through different ways for each relationship.
-        </p>
+    <!-- Entry template: copy one .pair block — a drawing plus its entry — to add
+         new writing, alternating pair-l and pair-r as you go down. -->
+    <div class="pair pair-l">
+      <div class="doodle doodle-panel doodle-1">
+        <div class="doodle-art">
+          <img src="stuff/drawings/web/3803.png" loading="lazy"
+               alt="A coloured drawing of a root system and hanging shapes strung along a line" />
+          <img class="doodle-noise" src="stuff/drawings/web/3803-noise.png" loading="lazy"
+               alt="" aria-hidden="true" />
+        </div>
       </div>
-    </details>
 
-    <div class="doodle doodle-l doodle-1">
-      <img src="stuff/drawings/web/3807.png" loading="lazy"
-           alt="Two long-limbed figures standing apart, labelled background reconstruction" />
+      <details class="entry">
+        <summary>What is love made of?</summary>
+        <div class="entry-body">
+          <p>
+            I&rsquo;ve been thinking about the material properties of love. As in, how can we best
+            characterize love in the way we characterize objects in our world?
+          </p>
+          <p>
+            Is it a rigid substance? If so, is familial love and romantic and platonic love all
+            fundamentally made of the same substance, with different lived experiences giving it
+            different compositions, different coatings and paints? Or is love more abstract, like a
+            tube that allows different liquids to flow through it? Perhaps love is the facilitation,
+            the space to create these exchanges rather than a thing.
+          </p>
+          <p>
+            Maybe love is an opening.
+          </p>
+          <p>
+            When I think about how I have experienced familial love, versus platonic love, is the
+            fundamental emotion the same? The fundamental grounding for love is certainly shared
+            experience - the ability to understand a human must come from a sense of alignment in
+            some form, either through lived or communicated experience. I understand this through a
+            popular idea in language theory - some set of mutual exchanges to arrive at something
+            called a &ldquo;fixed point&rdquo; where two individuals can both assert that they mean the same
+            thing. For example, two individuals from different countries and different languages
+            might want to make sure they mean the same thing when one says the word &ldquo;banana&rdquo; and one
+            says &ldquo;banan&rdquo;. This can happen through some set of actions where the terminal exchange and
+            therefore understanding is reached when both individuals have convincingly demonstrated
+            to each other that the other one indeed means what they mean. For example, one picks up
+            a banana, one says banan, and the other banana. The exchange terminates with mutual
+            agreement. The same identification could have been achieved if the individuals had
+            together discovered a banana for the first time together, in addition to the shared
+            connection over their full (live) demonstration of each other&rsquo;s discovery.
+          </p>
+          <p>
+            Shared experience creates the opening for mutually understood communication. Is this the
+            same as compatibility or alignment? I will perhaps never share the same views or
+            perspectives as my family, on most things - my parents grew up in the Soviet Union and my
+            brother in Russia. Their experiences of life are painted so fundamentally differently
+            than mine, an American born and raised in the Florida Keys. Structurally, our life experiences
+            in every realm - but perhaps familial - have coated our general perspectives to be very
+            different. Yet the feeling itself does seem to come from an understanding of their
+            experience, or at least an openness to it.
+          </p>
+          <p>
+            The love I feel for my family feels deeply weighed, weighed with years of baggage and
+            shared experience and injected with pain and judgement. It feels heavy, and intimate in a
+            very different way than platonic love. But the fundamental feeling of familiarity, the
+            feeling that falls beneath all of the noise and weight - that might be the same for
+            platonic and familial.
+          </p>
+          <p>
+            Maybe we have different substrates flowing through the opening created by our familial
+            love and romantic love, which makes our experience of love so different. But the
+            fundamental construction of these experiences is rooted in the same opening, jarred,
+            hammered, and carved open through different ways for each relationship.
+          </p>
+        </div>
+      </details>
     </div>
 
-    <details class="entry">
-      <summary>a layered view</summary>
-      <div class="entry-body placeholder">
-        <p>coming soon</p>
+    <div class="pair pair-r">
+      <div class="doodle doodle-panel doodle-2">
+        <div class="doodle-art">
+          <img src="stuff/drawings/web/3804.png" loading="lazy"
+               alt="A row of open pipes running along a beam, with small figures falling past it" />
+          <img class="doodle-noise" src="stuff/drawings/web/3804-noise.png" loading="lazy"
+               alt="" aria-hidden="true" />
+        </div>
       </div>
-    </details>
 
-    <div class="doodle doodle-r doodle-2">
-      <img src="stuff/drawings/web/3804.png" loading="lazy"
-           alt="A row of open pipes running along a beam, with small figures falling past it" />
+      <details class="entry">
+        <summary>a layered view</summary>
+        <div class="entry-body placeholder">
+          <p>coming soon</p>
+        </div>
+      </details>
     </div>
 
-    <details class="entry">
-      <summary>utopia</summary>
-      <div class="entry-body placeholder">
-        <p>coming soon</p>
+    <div class="pair pair-l">
+      <div class="doodle doodle-panel doodle-3">
+        <div class="doodle-art">
+          <img src="stuff/drawings/web/3805.png" loading="lazy"
+               alt="A crowded hillside of small creatures and cats beneath a lambda expression" />
+          <img class="doodle-noise" src="stuff/drawings/web/3805-noise.png" loading="lazy"
+               alt="" aria-hidden="true" />
+        </div>
       </div>
-    </details>
+
+      <details class="entry">
+        <summary>utopia</summary>
+        <div class="entry-body placeholder">
+          <p>coming soon</p>
+        </div>
+      </details>
+    </div>
   </section>
 
   <!-- Education -->
@@ -628,9 +787,13 @@
     </p>
   </section>
 
-  <div class="doodle doodle-l doodle-3">
-    <img src="stuff/drawings/web/3805.png" loading="lazy"
-         alt="A crowded hillside of small creatures and cats beneath a lambda expression" />
+  <div class="doodle doodle-side doodle-r doodle-4">
+    <div class="doodle-art">
+      <img src="stuff/drawings/web/3806.png" loading="lazy"
+           alt="A grinning crescent-eyed figure giving a thumbs up over a hilly landscape" />
+      <img class="doodle-noise" src="stuff/drawings/web/3806-noise.png" loading="lazy"
+           alt="" aria-hidden="true" />
+    </div>
   </div>
 
   <!-- C Compiler -->
@@ -645,11 +808,6 @@
     </div>
   </section>
 
-  <div class="doodle doodle-r doodle-4">
-    <img src="stuff/drawings/web/3806.png" loading="lazy"
-         alt="A grinning crescent-eyed figure giving a thumbs up over a hilly landscape" />
-  </div>
-
   <!-- Fluid Sim -->
   <section id="current-project" class="section">
     <h2>Fluid Simulator</h2>
@@ -661,6 +819,15 @@
       <a href="https://github.com/kn1451j/ParallelFluidSim" target="_blank">GitHub Code</a>
     </div>
   </section>
+
+  <div class="doodle doodle-side doodle-l doodle-5">
+    <div class="doodle-art">
+      <img src="stuff/drawings/web/3807.png" loading="lazy"
+           alt="Two long-limbed figures standing apart, labelled background reconstruction" />
+      <img class="doodle-noise" src="stuff/drawings/web/3807-noise.png" loading="lazy"
+           alt="" aria-hidden="true" />
+    </div>
+  </div>
 
   <!-- ORBSLAM Augmentation -->
   <section id="orbslam" class="section">
@@ -682,11 +849,6 @@
     </div>
   </section>
 
-  <div class="doodle doodle-l doodle-5">
-    <img src="stuff/drawings/web/3803.png" loading="lazy"
-         alt="A coloured drawing of a root system and hanging shapes strung along a line" />
-  </div>
-
   <!-- Robotics Mapping -->
   <section id="robotics" class="section">
     <h2>RoboSub Mapping System</h2>
@@ -707,16 +869,20 @@
     </p>
   </section>
 
+  <div class="doodle doodle-side doodle-r doodle-6">
+    <div class="doodle-art">
+      <img src="stuff/drawings/web/3808.png" loading="lazy"
+           alt="A dense ink drawing of a canyon with a tree splitting its face" />
+      <img class="doodle-noise" src="stuff/drawings/web/3808-noise.png" loading="lazy"
+           alt="" aria-hidden="true" />
+    </div>
+  </div>
+
   <!-- Resume -->
   <section id="resume" class="section">
     <h2>Resume</h2>
     <embed src="stuff/summerres.pdf" type="application/pdf" class="pdf-embed" />
   </section>
-
-  <div class="doodle doodle-r doodle-6">
-    <img src="stuff/drawings/web/3808.png" loading="lazy"
-         alt="A dense ink drawing of a canyon with a tree splitting its face" />
-  </div>
 
   <!-- Footer -->
   <footer>
@@ -778,6 +944,45 @@
           closing = false;
         }, SLIDE_MS);
       });
+
+      // The button leaves the flow in subspace mode, so the slot has to be told
+      // how tall it was, and the fixed button how far down the nav reaches.
+      function measure() {
+        var nav = document.querySelector('nav');
+        var root = document.documentElement;
+        root.style.setProperty('--nav-h', nav.offsetHeight + 'px');
+        if (!body.classList.contains('subspace-on')) {
+          root.style.setProperty('--btn-h', btn.offsetHeight + 'px');
+        }
+      }
+
+      measure();
+      window.addEventListener('resize', measure);
+      // The button is set in the handwriting face, so its height isn't final
+      // until that font has actually loaded.
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(measure);
+      }
+
+      // A drawing boils while its writing stays shut, and settles once it opens.
+      Array.prototype.forEach.call(document.querySelectorAll('.pair'), function (pair) {
+        var entry = pair.querySelector('details');
+        if (!entry) return;
+        entry.addEventListener('toggle', function () {
+          pair.classList.toggle('pair-open', entry.open);
+        });
+      });
+
+      // Every drawing boils while the page is moving. The timer restarts on each
+      // scroll event, so the class only drops once scrolling has actually stopped.
+      var scrollTimer;
+      window.addEventListener('scroll', function () {
+        body.classList.add('scrolling');
+        window.clearTimeout(scrollTimer);
+        scrollTimer = window.setTimeout(function () {
+          body.classList.remove('scrolling');
+        }, 220);
+      }, { passive: true });
     })();
   </script>
 
