@@ -96,8 +96,10 @@
       border-radius: 25px;
     }
 
+    /* The generous vertical padding is what opens the gap the margin drawings
+       sit in — at 50px they were wedged between two projects. */
     .section {
-      padding: 50px 20px;
+      padding: 85px 20px;
       max-width: 1000px;
       margin: 0 auto;
     }
@@ -187,8 +189,12 @@
       transition: background-color 1.8s ease;
     }
 
+    /* The subspace panel is left unfiltered so the drawings inside it keep
+       their colour — a descendant cannot undo an ancestor's filter, and
+       grayscale would take the ink with it. Nothing else in the panel is
+       coloured to begin with. */
     body.subspace-on > footer,
-    body.subspace-on > .section {
+    body.subspace-on > .section:not(.subspace) {
       filter: grayscale(1);
     }
 
@@ -389,13 +395,19 @@
       75%  { opacity: 0.5; transform: translate(0.4px, 0.7px); }
     }
 
-    /* Noise runs while the page is moving, and — for a drawing paired with a
-       writing entry — for as long as that entry stays shut. Open the writing
-       and its drawing settles. */
+    /* Noise runs while the page is moving, and — beside the writing — for as
+       long as every entry stays shut. */
     body.scrolling .doodle-noise,
-    .pair:not(.pair-open) .doodle-noise {
+    body:not(.entry-open) .doodle-panel .doodle-noise {
       opacity: 1;
       animation: doodle-boil 0.5s steps(1) infinite;
+    }
+
+    /* Opening any one dropdown settles every drawing on the page, the ones out
+       beside the projects included, and keeps them settled through a scroll. */
+    body.entry-open .doodle-noise {
+      opacity: 0;
+      animation: none;
     }
 
     /* --- Beside the writing entries --------------------------------------- */
@@ -463,9 +475,12 @@
       margin: 0 auto;
     }
 
+    /* The width is what the margin can spare: the gutter less the 18px gap to
+       the content column and 48px of clearance from the window edge, so the
+       drawing never ends up pinned against the wall. */
     .doodle-side > .doodle-art {
       position: absolute;
-      width: min(230px, calc((100vw - 1080px) / 2));
+      width: min(230px, calc((100vw - 1040px) / 2 - 66px));
       transform: translateY(-50%) rotate(var(--rot, 0deg));
     }
 
@@ -511,7 +526,7 @@
 
       /* The noise still shows, it just holds one frame instead of boiling. */
       body.scrolling .doodle-noise,
-      .pair:not(.pair-open) .doodle-noise {
+      body:not(.entry-open) .doodle-panel .doodle-noise {
         animation: none;
       }
 
@@ -590,9 +605,10 @@
       }
     }
 
-    /* Below this there is no margin left to hang a drawing in, and pushing one
-       into the content column is exactly what these are meant to avoid. */
-    @media (max-width: 1300px) {
+    /* Below this the margin can no longer hold a drawing at a legible size and
+       still keep it off the wall; crowding the content column is exactly what
+       these are meant to avoid, so they drop out instead. */
+    @media (max-width: 1360px) {
       .doodle-side {
         display: none;
       }
@@ -964,13 +980,16 @@
         document.fonts.ready.then(measure);
       }
 
-      // A drawing boils while its writing stays shut, and settles once it opens.
-      Array.prototype.forEach.call(document.querySelectorAll('.pair'), function (pair) {
-        var entry = pair.querySelector('details');
-        if (!entry) return;
-        entry.addEventListener('toggle', function () {
-          pair.classList.toggle('pair-open', entry.open);
-        });
+      // One open entry anywhere is enough to settle every drawing, so the state
+      // lives on the body rather than on the pair the entry belongs to.
+      var entries = document.querySelectorAll('.entry');
+      function syncEntries() {
+        var anyOpen = Array.prototype.some.call(entries, function (e) { return e.open; });
+        body.classList.toggle('entry-open', anyOpen);
+      }
+
+      Array.prototype.forEach.call(entries, function (entry) {
+        entry.addEventListener('toggle', syncEntries);
       });
 
       // Every drawing boils while the page is moving. The timer restarts on each
