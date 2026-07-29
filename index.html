@@ -101,7 +101,7 @@
        keeps a project's own content painting over any drawing that spills past
        the band into this padding. */
     .section {
-      padding: 120px 20px;
+      padding: 150px 20px;
       max-width: 1000px;
       margin: 0 auto;
       position: relative;
@@ -370,16 +370,9 @@
     }
 
     /* Each drawing is the clean version with its noise twin stacked on top.
-       Same canvas dimensions, so the overlay lines up without any nudging.
-       The radial mask vignettes both layers at once: the ink stays solid
-       through the middle and dissolves toward a circular edge, which is what
-       lets a drawing run large and sit near text without a hard rectangle
-       cutting across the page. farthest-side keeps the circle as wide as the
-       drawing — closest-side would crop these landscape sheets to a medallion. */
+       Same canvas dimensions, so the overlay lines up without any nudging. */
     .doodle-art {
       position: relative;
-      -webkit-mask-image: radial-gradient(circle farthest-side at 50% 50%, #000 58%, rgba(0, 0, 0, 0) 96%);
-      mask-image: radial-gradient(circle farthest-side at 50% 50%, #000 58%, rgba(0, 0, 0, 0) 96%);
     }
 
     .doodle-art img {
@@ -406,16 +399,15 @@
       75%  { opacity: 0.5; transform: translate(0.4px, 0.7px); }
     }
 
-    /* Noise runs while the page is moving, and — beside the writing — for as
-       long as every entry stays shut. */
-    body.scrolling .doodle-noise,
-    body:not(.entry-open) .doodle-panel .doodle-noise {
+    /* Every drawing boils for as long as all the writing stays shut — it does
+       not wait on a scroll. */
+    body:not(.entry-open) .doodle-noise {
       opacity: 1;
       animation: doodle-boil 0.5s steps(1) infinite;
     }
 
     /* Opening any one dropdown settles every drawing on the page, the ones out
-       beside the projects included, and keeps them settled through a scroll. */
+       beside the projects included. */
     body.entry-open .doodle-noise {
       opacity: 0;
       animation: none;
@@ -521,13 +513,23 @@
 
     /* Centred on the band, then shifted sideways into the empty half of it.
        Percentages resolve against the anchor, so the offset scales with the
-       column instead of drifting off a narrow window. */
+       column instead of drifting off a narrow window.
+
+       Only these carry the vignette — the radial mask dissolves both layers
+       toward a circular edge so a drawing sitting this close to a project's
+       text has no hard rectangle cutting across the page. The panel drawings
+       have the room to stand on their own edges. farthest-side keeps the
+       circle as wide as the sheet; closest-side would crop these landscape
+       drawings to a medallion. */
     .doodle-side > .doodle-art {
       position: absolute;
       top: 0;
       left: calc(50% + var(--shift, 0%));
       width: min(410px, 33vw);
       transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
+      opacity: 0.75;
+      -webkit-mask-image: radial-gradient(circle farthest-side at 50% 50%, #000 58%, rgba(0, 0, 0, 0) 96%);
+      mask-image: radial-gradient(circle farthest-side at 50% 50%, #000 58%, rgba(0, 0, 0, 0) 96%);
     }
 
     .doodle-4 { --shift: 19%; --rot: -2deg; }
@@ -565,8 +567,7 @@
       }
 
       /* The noise still shows, it just holds one frame instead of boiling. */
-      body.scrolling .doodle-noise,
-      body:not(.entry-open) .doodle-panel .doodle-noise {
+      body:not(.entry-open) .doodle-noise {
         animation: none;
       }
 
@@ -1047,16 +1048,6 @@
         });
       });
 
-      // Every drawing boils while the page is moving. The timer restarts on each
-      // scroll event, so the class only drops once scrolling has actually stopped.
-      var scrollTimer;
-      window.addEventListener('scroll', function () {
-        body.classList.add('scrolling');
-        window.clearTimeout(scrollTimer);
-        scrollTimer = window.setTimeout(function () {
-          body.classList.remove('scrolling');
-        }, 220);
-      }, { passive: true });
     })();
   </script>
 
