@@ -96,12 +96,10 @@
       border-radius: 25px;
     }
 
-    /* The generous vertical padding is what opens the band the drawings sit in
-       — at 50px they were wedged between two projects. The stacking context
-       keeps a project's own content painting over any drawing that spills past
-       the band into this padding. */
+    /* The stacking context keeps a project's own content painting over any
+       drawing that spills past its band into this padding. */
     .section {
-      padding: 150px 20px;
+      padding: 50px 20px;
       max-width: 1000px;
       margin: 0 auto;
       position: relative;
@@ -499,16 +497,23 @@
 
     /* --- Between the projects --------------------------------------------- */
 
-    /* Zero height, with the art absolutely positioned out of flow, so a
-       project's layout is identical whether subspace mode is on or off. The
-       anchor falls exactly between two sections, and translateY(-50%) centres
-       the drawing on that seam — in the open band their padding opens up. */
+    /* The anchor is the band itself: flat while the page is in colour, opening
+       to 360px as subspace mode comes on, so the two projects either side slide
+       apart by exactly the room their drawing needs and close back up when it
+       goes off. Only the seams that actually hold a drawing move — the rest of
+       the page keeps its spacing. 360px clears the tallest of them with room
+       left over on top of each section's own padding. */
     .doodle-side {
       position: relative;
       height: 0;
       z-index: 0;
       max-width: 1040px;
       margin: 0 auto;
+      transition: height 1.8s ease;
+    }
+
+    body.subspace-on .doodle-side {
+      height: 360px;
     }
 
     /* Centred on the band, then shifted sideways into the empty half of it.
@@ -523,7 +528,7 @@
        drawings to a medallion. */
     .doodle-side > .doodle-art {
       position: absolute;
-      top: 0;
+      top: 50%;
       left: calc(50% + var(--shift, 0%));
       width: min(410px, 33vw);
       transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
@@ -558,6 +563,7 @@
       .doodle-panel,
       .doodle-panel > .doodle-art,
       .doodle-noise,
+      .doodle-side,
       .pair {
         transition: none;
       }
