@@ -96,12 +96,16 @@
       border-radius: 25px;
     }
 
-    /* The generous vertical padding is what opens the gap the margin drawings
-       sit in — at 50px they were wedged between two projects. */
+    /* The generous vertical padding is what opens the band the drawings sit in
+       — at 50px they were wedged between two projects. The stacking context
+       keeps a project's own content painting over any drawing that spills past
+       the band into this padding. */
     .section {
-      padding: 85px 20px;
+      padding: 120px 20px;
       max-width: 1000px;
       margin: 0 auto;
+      position: relative;
+      z-index: 1;
     }
 
     .section h2 {
@@ -366,9 +370,16 @@
     }
 
     /* Each drawing is the clean version with its noise twin stacked on top.
-       Same canvas dimensions, so the overlay lines up without any nudging. */
+       Same canvas dimensions, so the overlay lines up without any nudging.
+       The radial mask vignettes both layers at once: the ink stays solid
+       through the middle and dissolves toward a circular edge, which is what
+       lets a drawing run large and sit near text without a hard rectangle
+       cutting across the page. farthest-side keeps the circle as wide as the
+       drawing — closest-side would crop these landscape sheets to a medallion. */
     .doodle-art {
       position: relative;
+      -webkit-mask-image: radial-gradient(circle farthest-side at 50% 50%, #000 58%, rgba(0, 0, 0, 0) 96%);
+      mask-image: radial-gradient(circle farthest-side at 50% 50%, #000 58%, rgba(0, 0, 0, 0) 96%);
     }
 
     .doodle-art img {
@@ -418,17 +429,21 @@
       display: grid;
       grid-template-rows: 0fr;
       overflow: hidden;
-      transition: grid-template-rows 1.8s ease, opacity 1.8s ease;
+      transition: grid-template-rows 1.8s ease, opacity 1.8s ease,
+                  margin-left 0.7s ease;
     }
 
     body.subspace-on .doodle-panel {
       grid-template-rows: 1fr;
     }
 
+    /* The fade lives on the art, not the column: the column's own opacity is
+       the slow subspace fade, and borrowing it here would drag this out to
+       1.8s while the slide finishes in 0.7s. */
     .doodle-panel > .doodle-art {
       min-height: 0;
       transform: rotate(var(--rot, 0deg)) translateY(14px);
-      transition: transform 1.8s ease;
+      transition: transform 1.8s ease, opacity 0.7s ease;
     }
 
     body.subspace-on .doodle-panel > .doodle-art {
@@ -436,12 +451,15 @@
     }
 
     /* Drawing and dropdown share a row, sides alternating down the panel.
-       The entry takes whatever the drawing leaves. */
+       The entry takes whatever the drawing leaves, so widening a drawing
+       narrows its dropdown to match. */
     .pair {
       display: flex;
       align-items: flex-start;
       gap: 28px;
       margin-bottom: 14px;
+      overflow: hidden;
+      transition: gap 0.7s ease;
     }
 
     .pair-r {
@@ -449,7 +467,7 @@
     }
 
     .pair > .doodle-panel {
-      flex: 0 0 42%;
+      flex: 0 0 var(--w, 52%);
     }
 
     .pair > .entry {
@@ -458,43 +476,63 @@
       margin-bottom: 0;
     }
 
-    .doodle-1 { --rot: -2.5deg; }
-    .doodle-2 { --rot: 2deg; }
-    .doodle-3 { --rot: 1.5deg; }
+    /* Opening an entry hands its whole row to the writing: a negative margin
+       equal to the drawing's own width pulls the drawing out of the line, so
+       the entry (flex: 1 1 0) grows into the space while the drawing slides
+       out under the row's overflow rather than squashing in place. The gap
+       closes with it, or the text would stop short of the edge. */
+    .pair-open {
+      gap: 0;
+    }
 
-    /* --- Beside the projects ---------------------------------------------- */
+    /* The row also collapses to nothing, or opening a short entry would leave
+       the slid-out drawing's height behind as an empty gap. The faster
+       transition is declared here because a transition is read from the state
+       being moved to — the unfold on the way back keeps the slow 1.8s. */
+    body.subspace-on .pair-open > .doodle-panel {
+      margin-left: calc(-1 * var(--w, 52%));
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.7s ease, margin-left 0.7s ease,
+                  opacity 1.8s ease;
+    }
 
-    /* Zero height, and the art itself is absolutely positioned clear of the
-       content column, so a project's layout is identical whether subspace mode
-       is on or off. The wrapper matches the section's outer width (1000px box
-       + 20px padding each side) so `100%` is exactly the content edge. */
+    .pair-open > .doodle-panel > .doodle-art {
+      opacity: 0;
+    }
+
+    /* The coloured drawing runs larger than the rest. */
+    .doodle-1 { --w: 62%; --rot: -2.5deg; }
+    .doodle-2 { --w: 52%; --rot: 2deg; }
+    .doodle-3 { --w: 52%; --rot: 1.5deg; }
+
+    /* --- Between the projects --------------------------------------------- */
+
+    /* Zero height, with the art absolutely positioned out of flow, so a
+       project's layout is identical whether subspace mode is on or off. The
+       anchor falls exactly between two sections, and translateY(-50%) centres
+       the drawing on that seam — in the open band their padding opens up. */
     .doodle-side {
       position: relative;
       height: 0;
+      z-index: 0;
       max-width: 1040px;
       margin: 0 auto;
     }
 
-    /* The width is what the margin can spare: the gutter less the 18px gap to
-       the content column and 48px of clearance from the window edge, so the
-       drawing never ends up pinned against the wall. */
+    /* Centred on the band, then shifted sideways into the empty half of it.
+       Percentages resolve against the anchor, so the offset scales with the
+       column instead of drifting off a narrow window. */
     .doodle-side > .doodle-art {
       position: absolute;
-      width: min(230px, calc((100vw - 1040px) / 2 - 66px));
-      transform: translateY(-50%) rotate(var(--rot, 0deg));
+      top: 0;
+      left: calc(50% + var(--shift, 0%));
+      width: min(410px, 33vw);
+      transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
     }
 
-    .doodle-side.doodle-l > .doodle-art {
-      right: calc(100% + 18px);
-    }
-
-    .doodle-side.doodle-r > .doodle-art {
-      left: calc(100% + 18px);
-    }
-
-    .doodle-4 { --rot: -2deg; }
-    .doodle-5 { --rot: 2.5deg; }
-    .doodle-6 { --rot: -1.5deg; }
+    .doodle-4 { --shift: 19%; --rot: -2deg; }
+    .doodle-5 { --shift: -21%; --rot: 2.5deg; }
+    .doodle-6 { --shift: 23%; --rot: -1.5deg; }
 
     @media (prefers-reduced-motion: reduce) {
       nav,
@@ -515,8 +553,10 @@
       }
 
       .doodle,
+      .doodle-panel,
       .doodle-panel > .doodle-art,
-      .doodle-noise {
+      .doodle-noise,
+      .pair {
         transition: none;
       }
 
@@ -597,18 +637,28 @@
 
       .pair > .doodle-panel {
         flex: 0 0 auto;
-        width: 78%;
+        width: 84%;
       }
 
       .pair-r > .doodle-panel {
         margin-left: auto;
       }
+
+      /* Stacked, so there is no sideways room to slide into — the collapse
+         alone carries it, without the horizontal pull. */
+      body.subspace-on .pair-open > .doodle-panel {
+        margin-left: 0;
+      }
+
+      body.subspace-on .pair-r.pair-open > .doodle-panel {
+        margin-left: auto;
+      }
     }
 
-    /* Below this the margin can no longer hold a drawing at a legible size and
-       still keep it off the wall; crowding the content column is exactly what
-       these are meant to avoid, so they drop out instead. */
-    @media (max-width: 1360px) {
+    /* Phone layout drops the section padding to 30px, leaving no band for a
+       drawing to sit in without landing on the writing, so they drop out. The
+       panel drawings still show. */
+    @media (max-width: 768px) {
       .doodle-side {
         display: none;
       }
@@ -980,8 +1030,9 @@
         document.fonts.ready.then(measure);
       }
 
-      // One open entry anywhere is enough to settle every drawing, so the state
-      // lives on the body rather than on the pair the entry belongs to.
+      // Two pieces of state per toggle: the pair's own, which slides its
+      // drawing out and gives the row to the writing, and the body's, since one
+      // open entry anywhere is enough to settle every drawing on the page.
       var entries = document.querySelectorAll('.entry');
       function syncEntries() {
         var anyOpen = Array.prototype.some.call(entries, function (e) { return e.open; });
@@ -989,7 +1040,11 @@
       }
 
       Array.prototype.forEach.call(entries, function (entry) {
-        entry.addEventListener('toggle', syncEntries);
+        entry.addEventListener('toggle', function () {
+          var pair = entry.closest('.pair');
+          if (pair) pair.classList.toggle('pair-open', entry.open);
+          syncEntries();
+        });
       });
 
       // Every drawing boils while the page is moving. The timer restarts on each
