@@ -1,0 +1,81 @@
+Actualization
+pages: 3874.jpg, 3875.jpg
+figures: 3874-diagram.jpg, 3875-river.jpg, 3875-wave.jpg
+redrawn: 3874-diagram-clean.svg (+ .png)
+
+--- 3874 (diagram — 3874-diagram.jpg) ---
+
+Labels on the two blobs, left to right:
+
+  ↳ The space of [the universe and] life and the universe
+  my subspace
+  my [scribbled out]
+  my column space
+  my nullspace
+  [my stream of consciousness] my personality        (arrow down into the gap)
+  the collective perceived world
+  my rowspace / action space
+  perceived nullspace
+  (dissipation)
+  My stream of consciousness
+  A          (arrow from left blob to right blob)
+  A^T        (arrow back, right to left)
+
+--- 3874 (text below the rule) ---
+
+Actualization = Becoming full rank. Being able to understand/feel everything in my
+body. A non-blocking filter for our perceived existence. Unity with this world.
+
+My subspace → the latent space that my thoughts take form in.
+  ↳ my nullspace → experiences / perceptions [mapped to by] that are unfathomable
+    to me. Perhaps manifests in not caring? Life!
+  ↳ My column space → Experiences injested into thoughts and ideas by me.
+    [margin: inability to understand]
+
+The collective perceived world → still only understood by me through a
+transformation. However, my actions take reality beyond my projection (unseen to
+me) in it.
+  ↳ row space → the responses I present and actualize from my thoughts. My
+    expression.
+  ↳ perceived nullspace → ideas, thoughts unable to manifest in this world.
+    Perhaps this feels like dissipation, leading to frustration, anger, a feeling
+    of blocking?
+    [margin: inability to make / act out]
+
+--- 3875 ---
+
+Perhaps being alive is the very capacity to transform life. The ability to act as
+a filter, and transformer.
+
+Constantly blocking the flow, with distractions, a lack of attention, builds
+rigidity. It constrains the filter and allows less life to flow. Perhaps this is
+the feeling of helplessness, the desire to move w/ flow, naturally, but the
+inwards opposing structures preventing this.
+
+Flexibility is the highest value. Being responsive rather than resistant allows
+more flow in the direction of life, rather than orthogonal to it, rather than
+dissipation into entropy, like the force of friction.
+
+Allowing oneself to be excited but also steady, when life calls for it.
+
+Focus, attention ⇒ flexibility
+  ↳ being receptive to inputs prevents buildup of fear / inattention, which
+    atrophies ability to understand.
+  being expressive → perpetuates connection.
+
+[river diagram — 3875-river.jpg]
+  flow of life
+  pebbles, causing friction & dissipation (blockers)
+  constriction of flow when memory buildup
+  lack of flexibility
+  river is my world
+
+[wave diagram — 3875-wave.jpg]
+  input of life →
+  continuous, cyclic transformation when signal is unblocked — the flow
+
+  my function, and me composed of n fourier frequencies
+
+2 types of frustration? Lack of understanding and lack of
+  blockage
+  expression?   Both constrict the funnel.
