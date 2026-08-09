@@ -299,13 +299,18 @@
       }
     }
 
-    /* The panel's own title, centred over the banner and in the panel's ink
-       rather than the blue the project headings carry. */
+    /* The panel's own title. Still an h2 for the outline, but it drops the
+       project headings' size, weight, blue and padding — it reads as one
+       centred line of the same handwriting as everything under it. */
     .subspace > h2 {
       display: block;
       text-align: center;
       color: #2b2b2b;
-      margin-bottom: 16px;
+      font-size: 1.35em;
+      font-weight: normal;
+      line-height: 1.75;
+      margin: 0 0 20px;
+      padding: 0;
     }
 
     .subspace-banner {
@@ -788,6 +793,7 @@
         height: 100px;
       }
 
+      .subspace > h2,
       .subspace-prose p,
       .entry-body {
         font-size: 1.15em;
