@@ -307,7 +307,13 @@
       height: auto;
     }
 
-    .subspace-intro p {
+    /* The section's own writing, sitting outside any dropdown. Set a shade
+       larger than the entry bodies, since nothing has to be opened to reach it. */
+    .subspace-prose {
+      margin: 36px 0 30px;
+    }
+
+    .subspace-prose p {
       font-size: 1.35em;
       line-height: 1.75;
     }
@@ -354,6 +360,21 @@
       color: #777;
     }
 
+    /* Links inside the writing stay in the ink colour and lean on the underline,
+       so a citation doesn't punch a blue hole through a page of handwriting. */
+    .entry-body a,
+    .subspace-prose a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+    }
+
+    .entry-body a:hover,
+    .subspace-prose a:hover {
+      color: #1e3a8a;
+    }
+
     /* Figures that belong to the writing itself, rather than the drawings
        alongside it: the redrawn diagram, and photographed sketches from the
        same pages. Full width of the body, so they stay legible once the entry
@@ -372,6 +393,22 @@
     /* Photographs of the page need an edge; the redraw carries its own. */
     .entry-figure.photo img {
       border: 1px solid #e4e4e4;
+    }
+
+    /* Two sketches that read fine well under full width — a max-width rather
+       than a width so they still shrink with a narrow window. */
+    .entry-figure.fig-sm img,
+    .entry-figure.fig-md img {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .entry-figure.fig-sm img {
+      max-width: 32%;
+    }
+
+    .entry-figure.fig-md img {
+      max-width: 50%;
     }
 
 
@@ -644,9 +681,19 @@
         height: 100px;
       }
 
-      .subspace-intro p,
+      .subspace-prose p,
       .entry-body {
         font-size: 1.15em;
+      }
+
+      /* A third of the column is unreadable on a phone; give the two reduced
+         sketches back most of the width. */
+      .entry-figure.fig-sm img {
+        max-width: 60%;
+      }
+
+      .entry-figure.fig-md img {
+        max-width: 88%;
       }
 
       .entry > summary {
@@ -734,27 +781,97 @@
     <img class="subspace-banner" src="stuff/subspace-figures.png"
          alt="A row of hand-drawn figures, several scribbled out, one reduced to a single line" />
 
-    <div class="subspace-intro">
-      <p>
-        I am on a mission to completely publicize my personal journal and make all of my
-        thoughts public because I want to 1. improve as a communicator 2. connect with
-        people about ideas and hopefully in the process refine my internal world models
-      </p>
-      <p>
-        I don&rsquo;t really know how to communicate these types of ideas. They are not widespread
-        in my daily conversations and I don&rsquo;t get to talk about these kinds of things that much.
-        So I&rsquo;ll try to walk through examples, but maybe they&rsquo;re trivial and people understand
-        this already. Anyways, I&rsquo;d love feedback on these thoughts and ideas. Almost everything
-        I put in my journal has been post-processed and is not touchy. Honestly things are
-        generally not touchy.
-      </p>
-      <p>
-        At this point, everything here is unpolished and idea sketches. Many of the ideas used
-        within the writing I have fundamentally internalized and might seem like baseless claims
-        (e.g. the idea of neutrality in any life), but I plan to start dedicating weekly time to
-        refine these thoughts into something more presentable.
-      </p>
-    </div>
+    <details class="entry">
+      <summary>Isolation and Self-Identity</summary>
+      <div class="entry-body">
+        <p>
+          In isolation, my thoughts become self-integral. I try to think and without context, I
+          draw a blank. I find I have no way to realize a thought or process or reflect. I try to
+          grasp at floating ideas but it feels like finding something far out in the ocean while
+          drowning in the water. I become detached, amorphous. I can&rsquo;t even self-reflect,
+          trying to map thought patterns from within the pattern, a meta-reflection that would be
+          me trying to define a logical pattern from within the logical framework itself (cue
+          Godel).
+        </p>
+        <p>
+          And this stillness with the self feels like a loss of self. Because who am I when
+          disconnected from a reference point? To myself, I am just me. I am home, I am the vessel
+          through which I experience the world, but I am not concretely defined. I am a chassis for
+          the flow of experience rather than anything closed, contained. My material identity, my
+          fashion, my art, my tastes are all defined with relation to my surroundings.
+        </p>
+        <p>
+          But I&rsquo;m quite good at masking this itch, this little hint of discomfort. I can grab
+          my phone or eat some food. I watch some TV. Stimulation. Because of the accessibility of
+          these diversions, they are completely separated from intention. There is no string from
+          the self to this activity, no information or self-reflection or identity rooted through
+          the choice to partake. It&rsquo;s a subhuman distraction, a temporary life supply to keep
+          my physical realization occupied and connected to reality, yet completely detached from
+          my sense of self. It&rsquo;s worse even than a primal instinct, which reminds you of your
+          physicality.
+        </p>
+        <p>
+          Without interactivity, without feedback, my thoughts remain uncalibrated, drifting in
+          some direction that is familiar and repetitive, within my patterns, my latent space. So
+          when interacting with people, books, objects that in some way require my attention and
+          are somehow connected to my identity, this flow of consciousness experiences turbulence.
+          Rocks in the water, that block the current, that send pressures and excite the molecules
+          and create variation in the flow. My consciousness is redirected along vectors that
+          wouldn&rsquo;t generally be part of the natural plane that my thoughts swim along. My
+          natural ideas are challenged, coerced into unfamiliar spaces and directions, played with,
+          kicked around, even reflected by overhearing a conversation that I wouldn&rsquo;t
+          naturally be engaged in and through attention acknowledging this lack of interest, this
+          orthogonality to my identity, and in doing so learning, engaging with my identity still.
+        </p>
+        <p>
+          When I lose this attention, I begin to take my thoughts for granted. But every thought is
+          a particle, a sample from my distribution of thought. And when this thought is sampled in
+          a conversation, it experiences some sort of feedback. And the actual content of the
+          feedback itself doesn&rsquo;t matter all that much, because the content belongs to
+          whoever I&rsquo;m interacting with. But this feedback generates friction for your thought,
+          and the thought must redirect slightly, and this internal reaction is your way to
+          recognize these samples of your overall distribution of thoughts. This is my only way to
+          map out my thought map, piece by piece. This is how I learn about myself, how I get
+          glimpses of my true self. This process, this deep attentiveness in daily life reveals
+          Carl Jung&rsquo;s Shadow. It turns mundanity into an active process of individuation.
+        </p>
+        <p>
+          Any judgement you cast is a reflection, an opportunity to see your thoughts. We look
+          through these warped mirrors and piece together our identity, understand ourselves, and
+          see ourselves.
+        </p>
+        <p>
+          But I can&rsquo;t say all this without acknowledging that these glimpses can easily remain
+          undigested. Without sitting with yourself, gathering the shards and sifting through them
+          it is impossible to create this map. I become a collection of fragments that don&rsquo;t
+          align in any particular way. I find that in hectic periods I stop living with intention, I
+          forget that every moment alive is the opportunity to exercise the wonderful right of being
+          myself. I stop noticing little things, and lose my taste. My identity becomes so cluttered
+          and overfilled with patterns that haven&rsquo;t been digested, or compressed into a form
+          that makes sense for my mind that I become a blank human. Every color blends together and
+          becomes a white slate living on autopilot.
+        </p>
+        <p>
+          And maybe this is a completely valid state to live in. Turbulence in the plane of
+          existence, oscillations undigested superpositioning and blending and moving. There is
+          something so fascinating about this type of &ldquo;go go go&rdquo; escapism because
+          it&rsquo;s an escape of life with life - is it really an escape? Am I falling for the over
+          self-analyzation? Perhaps the digestion itself is an escape?
+        </p>
+        <p>
+          When I go through periods of days, or weeks without spending time alone, it feels as if I
+          haven&rsquo;t seen an old friend in a long time. And then when I see her, she&rsquo;s
+          completely different. Unknown to me, and neglected in our friendship. Her needs
+          haven&rsquo;t been heard, and I realize I don&rsquo;t know the first thing about her, who
+          she is, what she desires. How have the things she&rsquo;s seen and experienced made her
+          feel? What did she like? What did she dislike? And I can&rsquo;t answer any of these
+          questions. It is the ultimate abandonment of self-identity, and I find it leads to fear,
+          to insecurity, and to unsatisfaction. Attention dissolves this. Attention creates a home
+          in oneself, a basis for external interaction, and security in something independent of all
+          external stimuli.
+        </p>
+      </div>
+    </details>
 
     <!-- Entry template: copy one .pair block — a drawing plus its entry — to add
          new writing, alternating pair-l and pair-r as you go down. -->
@@ -927,7 +1044,8 @@
     </div>
     -->
 
-    <!-- hidden: utopia
+    <!-- hidden: the earlier draft of utopia, superseded by the published entry
+         at the bottom of this panel
     <div class="pair pair-l">
       <div class="doodle doodle-panel doodle-3">
         <div class="doodle-art">
@@ -994,95 +1112,85 @@
     </div>
     -->
 
-    <!-- The diagram carries this one, so it runs full width with no drawing
-         beside it — the figures are the drawing. -->
-    <details class="entry">
-      <summary>scribbles</summary>
-      <div class="entry-body">
-        <p>
-          Actualization = becoming full rank. Being able to understand and feel everything in my
-          body. A non-blocking filter for our perceived existence. Unity with this world.
-        </p>
+    <!-- The scribbles run in the open, as the panel's own writing rather than
+         behind a dropdown — the diagram carries them and there is no drawing
+         beside them, since the figures are the drawing. -->
+    <div class="subspace-prose">
+      <p>
+        Actualization = becoming full rank. Being able to understand and feel everything in my
+        body. A non-blocking filter for our perceived existence. Unity with this world.
+      </p>
 
-        <figure class="entry-figure">
-          <!-- The PNG, not the SVG: an svg in an <img> renders in secure static
-               mode, where WebKit drops the text set in the embedded KatiaHand.
-               3874-diagram-clean.svg is the source it is exported from. -->
-          <img src="stuff/journal/3874-diagram-clean.png" loading="lazy"
-               alt="Two nested regions. On the left, my subspace holds my column space, with my
-                    nullspace as the band around it. On the right, the collective perceived world
-                    holds my rowspace, or action space, with the perceived nullspace &mdash;
-                    dissipation &mdash; as the band around it. A carries the left into the right; A
-                    transpose carries it back." />
-        </figure>
+      <figure class="entry-figure">
+        <!-- The PNG, not the SVG: an svg in an <img> renders in secure static
+             mode, where WebKit drops the text set in the embedded KatiaHand.
+             3874-diagram-clean.svg is the source it is exported from. -->
+        <img src="stuff/journal/3874-diagram-clean.png" loading="lazy"
+             alt="Two nested regions. On the left, my subspace holds my column space, with my
+                  nullspace as the band around it. On the right, the collective perceived world
+                  holds my rowspace, or action space, with the perceived nullspace &mdash;
+                  dissipation &mdash; as the band around it. A carries the left into the right; A
+                  transpose carries it back." />
+      </figure>
 
-        <p>
-          My subspace is the latent space that my thoughts take form in. Inside it, my column space
-          is experiences injested into thoughts and ideas by me. My nullspace is the rest -
-          experiences and perceptions that are unfathomable to me, which perhaps manifests in not
-          caring.
-        </p>
-        <p>
-          The collective perceived world is still only understood by me through a transformation.
-          However, my actions take reality beyond my projection (unseen to me) in it. Its rowspace
-          is the responses I present and actualize from my thoughts - my expression. Its perceived
-          nullspace is ideas and thoughts unable to manifest in this world. Perhaps this feels like
-          dissipation, leading to frustration, anger, a feeling of blocking.
-        </p>
-        <p>
-          Maybe being &ldquo;alive&rdquo; is the very capacity to transform life. The ability to act
-          as a filter, a transformer of motion through time - experience.
-        </p>
-        <p>
-          Constantly blocking the flow, with distractions, a lack of attention, builds rigidity. It
-          constrains the filter and allows less life to flow. Maybe this is what it means to feel
-          helpless: you desire to move with flow, naturally, but internal opposing structures - which
-          almost always seem external - prevent this.
-        </p>
+      <p>
+        My subspace is the latent space that my thoughts take form in. Inside it, my column space
+        is experiences injested into thoughts and ideas by me. My nullspace is the rest -
+        experiences and perceptions that are unfathomable to me, which perhaps manifests in not
+        caring.
+      </p>
+      <p>
+        The collective perceived world is still only understood by me through a transformation.
+        However, my actions take reality beyond my projection (unseen to me) in it. Its rowspace
+        is the responses I present and actualize from my thoughts - my expression. Its perceived
+        nullspace is ideas and thoughts unable to manifest in this world. Perhaps this feels like
+        dissipation, leading to frustration, anger, a feeling of blocking.
+      </p>
+      <p>
+        Maybe being &ldquo;alive&rdquo; is the very capacity to transform life. The ability to act
+        as a filter, a transformer of motion through time - experience.
+      </p>
+      <p>
+        Constantly blocking the flow, with distractions, a lack of attention, builds rigidity. It
+        constrains the filter and allows less life to flow. Maybe this is what it means to feel
+        helpless: you desire to move with flow, naturally, but internal opposing structures - which
+        almost always seem external - prevent this.
+      </p>
 
-        <figure class="entry-figure photo">
-          <img src="stuff/journal/3875-river.jpg" loading="lazy"
-               alt="A sketch of a river narrowing around pebbles, annotated: flow of life, pebbles
-                    causing friction and dissipation, constriction of flow when memory buildup, lack
-                    of flexibility, river is my world." />
-        </figure>
+      <figure class="entry-figure photo fig-sm">
+        <img src="stuff/journal/3875-river.jpg" loading="lazy"
+             alt="A sketch of a river narrowing around pebbles, annotated: flow of life, pebbles
+                  causing friction and dissipation, constriction of flow when memory buildup, lack
+                  of flexibility, river is my world." />
+      </figure>
 
-        <p>
-          Flexibility is the highest value. Being responsive rather than resistant allows more flow
-          in the direction of life, rather than orthogonal to it, rather than dissipation into
-          entropy, like the force of friction.
-        </p>
-        <p>
-          Allowing oneself to be excited but also steady, when life calls for it.
-        </p>
-        <p>
-          Focus and attention give flexibility. Being receptive to inputs prevents buildup of fear
-          and inattention, which atrophies ability to understand. Being expressive perpetuates
-          connection.
-        </p>
+      <p>
+        Flexibility is the highest value. Being responsive rather than resistant allows more flow
+        in the direction of life, rather than orthogonal to it, rather than dissipation into
+        entropy, like the force of friction.
+      </p>
+      <p>
+        Allowing oneself to be excited but also steady, when life calls for it.
+      </p>
+      <p>
+        Focus and attention give flexibility. Being receptive to inputs prevents buildup of fear
+        and inattention, which atrophies ability to understand. Being expressive perpetuates
+        connection.
+      </p>
 
-        <figure class="entry-figure photo">
-          <img src="stuff/journal/3875-wave.jpg" loading="lazy"
-               alt="A wave running left to right, labelled input of life, with arrows above and
-                    below it, annotated: continuous, cyclic transformation when signal is unblocked
-                    &mdash; the flow. Below it a second wave: my function, and me composed of n
-                    fourier frequencies." />
-        </figure>
+      <figure class="entry-figure photo fig-md">
+        <img src="stuff/journal/3875-wave.jpg" loading="lazy"
+             alt="A wave running left to right, labelled input of life, with arrows above and
+                  below it, annotated: continuous, cyclic transformation when signal is unblocked
+                  &mdash; the flow. Below it a second wave: my function, and me composed of n
+                  fourier frequencies." />
+      </figure>
 
-        <p>
-          Two types of frustration? Lack of understanding, and lack of expression. Both constrict the
-          funnel.
-        </p>
-        <p>
-          I am thinking about the feeling of being on top of the world. Nothing can go wrong.
-          Everything bad passes over you, but
-        </p>
-        <p>
-          When you feel good, you bring people up. Otherwise you desire to be brought down -
-          connection graph
-        </p>
-      </div>
-    </details>
+      <p>
+        Two types of frustration? Lack of understanding, and lack of expression. Both constrict the
+        funnel.
+      </p>
+    </div>
 
     <!-- hidden: binary characterization
     <details class="entry">
@@ -1185,7 +1293,8 @@
     </details>
     -->
 
-    <!-- hidden: isolation and self-identity
+    <!-- hidden: the earlier draft of isolation and self-identity, superseded by
+         the published entry at the top of this panel
     <details class="entry">
       <summary>isolation and self-identity</summary>
       <div class="entry-body">
@@ -1321,6 +1430,120 @@
       </div>
     </details>
     -->
+
+    <details class="entry">
+      <summary>Familial sadness</summary>
+      <div class="entry-body">
+        <p>
+          There&rsquo;s something deeply devastating in the love I feel for my family.
+        </p>
+        <p>
+          I see myself so much in my parents, in my brother. So much of their character is embedded
+          in me, and mine in them. It&rsquo;s a type of understanding that I will never share with
+          anyone else.
+        </p>
+        <p>
+          I talk with my brother about how we see our father&rsquo;s character in us. I begin to say
+          something and I am washed with a feeling similar to deja vu, a realization that the very
+          source of the thought is seeded in my parents.
+        </p>
+        <p>
+          And this taints my love. It doesn&rsquo;t make it weaker. It strengthens it in a deeply
+          painful way. I feel a constant heartbreak for my family, because almost all of the pain I
+          have ever felt also belongs to them. Has also been felt by them.
+        </p>
+        <p>
+          The very human, very common understanding that life is just difficult, and filled with
+          pain. I know every single human feels it, but with my family, I can replay almost the exact
+          pain they have felt. I know my most awful habits, and sources of shame, and lowest moments,
+          come close - touch the moments they have felt. Maybe not directly, but in similar points of
+          their journey, in similar situations, they must have felt almost like I do.
+        </p>
+        <p>
+          And why then do I feel so much sadness for them, when I appreciate every sad moment for
+          myself. When the beauty of life that washes over me in sadness is also in them. Why do I
+          pity them, but not myself? Is it some sort of superiority that stems from the magnitude of
+          my understanding and empathy for them? Some sort of false confidence that I bear?
+        </p>
+        <p>
+          I don&rsquo;t understand. Perhaps this love is just funneled, is just so vividly emotional
+          that the feeling itself is overwhelming, and unidentifiable.
+        </p>
+        <p>
+          Perhaps I am mistaken to color it with a negative emotion. Perhaps I should color it grey,
+          or white, a mixture of every emotion I have felt. Or perhaps it is a reflection of my
+          current state. Of fear, and uncertainty, projected directly onto those I feel that I
+          understand them most.
+        </p>
+      </div>
+    </details>
+
+    <div class="pair pair-r">
+      <div class="doodle doodle-panel doodle-3">
+        <div class="doodle-art">
+          <img src="stuff/drawings/web/3805.png" loading="lazy"
+               alt="A crowded hillside of small creatures and cats beneath a lambda expression" />
+          <img class="doodle-noise" src="stuff/drawings/web/3805-noise.png" loading="lazy"
+               alt="" aria-hidden="true" />
+        </div>
+      </div>
+
+      <details class="entry">
+        <summary>Utopia</summary>
+        <div class="entry-body">
+          <p>
+            I recently watched a
+            <a href="https://www.youtube.com/watch?v=JD4Fhh6GDcY&amp;t=1781s" target="_blank"
+               rel="noopener">Zena Hitz interview</a>
+            where she brought up the tension between telic and atelic life, and it made me start
+            thinking about the telic components of my own life, and what maximizing my intrinsic
+            for-pleasure life would look like. It made me think about what my &ldquo;utopia&rdquo;
+            looks like? What is my perfect society?
+          </p>
+          <p>
+            I built a picture where the society is something like a commune - close friends, family
+            connections, shared goals of living healthily and maintaining the state of the space.
+            But I also certainly wouldn&rsquo;t remove romance or pain, I wouldn&rsquo;t remove love
+            and emotions and all these things that Atwood and Huxley have painted as fundamental to
+            a satisfying (not happy) society. Pain, heartbreak, come paired with joyful things.
+            There would be boys and girls that break my heart, there would be grief over my parents
+            dying.
+          </p>
+          <p>
+            But why is that different from what I&rsquo;m living now? I go to work. I work on a team
+            for a shared goal, and perhaps the goal isn&rsquo;t survival, but it is a shared forward
+            progression. I date. I have close friends and family.
+          </p>
+          <p>
+            I experience highs and lows, and in fact my highs are in proportion to my lows. When I
+            kiteboard, I often feel as if I am experiencing the most sensational experience possible,
+            similarly with concerts - loud music and laser lights completely swallowing me, or
+            visiting a new place, completely new sensations to taste and live there. With this came
+            paired a dullness - whoever manufactured that plane, gear, concert set - it was likely
+            just as boring and draining in the cumulative labor of generating that experience as it
+            was exciting for me. Technology seems to facilitate proportionally thrilling activities
+            to the labor and mundanity put into making that technology accessible.
+          </p>
+          <p>
+            But why does it have to be? We might draw the metaphor of a hike, a hard, arduous climb
+            up with the gain of the view at the top - proportional in the line of sight as the
+            vertical length of the height as it happens. But I very much enjoy the entire way through
+            a hike - I can&rsquo;t even say the summit view is my favorite part. And yet if I was
+            taking this journey knowing I wouldn&rsquo;t see the top, maybe, for example, someone
+            else would get to see the top instead of me, it would make the experience much less
+            pleasurable (perhaps for both of us). Why?
+          </p>
+          <p>
+            But my broader point is there would still be oscillation within a Utopia. Not because we
+            can&rsquo;t conceive of a life without it - we have the primary example of this
+            &ldquo;flatline&rdquo; life within Buddhism. There would be little highs, and there would
+            be little lows. Why is the magnitude of these experiences important, if they integrate to
+            the same overall experience quality - which I argue is neutrality. Something about
+            simplicity&hellip;
+          </p>
+        </div>
+      </details>
+    </div>
   </section>
 
   <!-- Education -->
