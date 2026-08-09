@@ -429,6 +429,68 @@
     .fig-lg { width: 40%; }
     .fig-xl { width: 46%; }
 
+    /* --- Opening a figure to full size ------------------------------------ */
+
+    /* A button rather than a click handler on the image, so the diagram is
+       reachable by keyboard and announces itself as something you can open. */
+    .zoom-trigger {
+      display: block;
+      width: 100%;
+      padding: 0;
+      border: 0;
+      background: none;
+      font: inherit;
+      cursor: zoom-in;
+    }
+
+    .zoom-trigger:focus-visible {
+      outline: 2px solid #2b2b2b;
+      outline-offset: 4px;
+      border-radius: 12px;
+    }
+
+    /* Above the nav (100) and the subspace button (120). A direct child of
+       body, so no filtered ancestor can capture the fixed positioning. */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3vmin;
+      background-color: rgba(24, 24, 24, 0.88);
+      cursor: zoom-out;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    /* display: flex would otherwise win over the hidden attribute. */
+    .lightbox[hidden] {
+      display: none;
+    }
+
+    .lightbox.open {
+      opacity: 1;
+    }
+
+    /* The drawings are line art on transparency, so they need the page's own
+       paper behind them once they are over the dark backdrop. */
+    .lightbox img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      border-radius: 12px;
+      background-color: #fbfbfb;
+      transform: scale(0.96);
+      transition: transform 0.35s ease;
+    }
+
+    .lightbox.open img {
+      transform: none;
+    }
+
 
     /* Drawings, in three flavours: .doodle-inline is set into the panel's own
        writing, .doodle-panel sits beside a writing entry, .doodle-side hangs in
@@ -652,8 +714,14 @@
       .doodle-panel > .doodle-art,
       .doodle-noise,
       .doodle-side,
-      .pair {
+      .pair,
+      .lightbox,
+      .lightbox img {
         transition: none;
+      }
+
+      .lightbox img {
+        transform: none;
       }
 
       .doodle-panel > .doodle-art {
@@ -1140,15 +1208,19 @@
       </p>
 
       <figure class="entry-figure fig-float fig-l fig-xl">
-        <!-- The PNG, not the SVG: an svg in an <img> renders in secure static
-             mode, where WebKit drops the text set in the embedded KatiaHand.
-             3874-diagram-clean.svg is the source it is exported from. -->
-        <img src="stuff/journal/3874-diagram-clean.png" loading="lazy"
-             alt="Two nested regions. On the left, my subspace holds my column space, with my
-                  nullspace as the band around it. On the right, the collective perceived world
-                  holds my rowspace, or action space, with the perceived nullspace &mdash;
-                  dissipation &mdash; as the band around it. A carries the left into the right; A
-                  transpose carries it back." />
+        <!-- Its labels are the smallest type on the page at this width, so this
+             is the one figure that opens to full size. -->
+        <button type="button" class="zoom-trigger" aria-label="Open the subspace diagram full size">
+          <!-- The PNG, not the SVG: an svg in an <img> renders in secure static
+               mode, where WebKit drops the text set in the embedded KatiaHand.
+               3874-diagram-clean.svg is the source it is exported from. -->
+          <img src="stuff/journal/3874-diagram-clean.png" loading="lazy"
+               alt="Two nested regions. On the left, my subspace holds my column space, with my
+                    nullspace as the band around it. On the right, the collective perceived world
+                    holds my rowspace, or action space, with the perceived nullspace &mdash;
+                    dissipation &mdash; as the band around it. A carries the left into the right; A
+                    transpose carries it back." />
+        </button>
       </figure>
 
       <p>
@@ -1695,6 +1767,12 @@
     </p>
   </footer>
 
+  <!-- Sits outside every section: a filtered ancestor would capture the fixed
+       positioning and pin this inside the panel instead of the window. -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" hidden>
+    <img id="lightbox-img" src="" alt="" />
+  </div>
+
   <script>
     (function () {
       var btn = document.getElementById('subspace-toggle');
@@ -1782,6 +1860,48 @@
           if (pair) pair.classList.toggle('pair-open', entry.open);
           syncEntries();
         });
+      });
+
+      // Any figure wrapped in a .zoom-trigger opens to full size. The overlay
+      // borrows the figure's own alt text, so it describes whichever one is up.
+      var lightbox = document.getElementById('lightbox');
+      var lightboxImg = document.getElementById('lightbox-img');
+      var opener = null;
+
+      function openZoom(trigger) {
+        var img = trigger.querySelector('img');
+        lightboxImg.src = img.currentSrc || img.src;
+        lightboxImg.alt = img.alt;
+        opener = trigger;
+        lightbox.hidden = false;
+        void lightbox.offsetHeight;          // flush styles so the fade runs
+        lightbox.classList.add('open');
+      }
+
+      function closeZoom() {
+        if (lightbox.hidden) return;
+        lightbox.classList.remove('open');
+        // Hold the overlay until the fade is done, then hand focus back to the
+        // figure that opened it.
+        window.setTimeout(function () {
+          lightbox.hidden = true;
+          lightboxImg.src = '';
+          if (opener) opener.focus();
+          opener = null;
+        }, 350);
+      }
+
+      Array.prototype.forEach.call(
+        document.querySelectorAll('.zoom-trigger'),
+        function (trigger) {
+          trigger.addEventListener('click', function () { openZoom(trigger); });
+        }
+      );
+
+      lightbox.addEventListener('click', closeZoom);
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeZoom();
       });
 
     })();
