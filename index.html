@@ -211,6 +211,25 @@
       filter: grayscale(1);
     }
 
+    /* The animation sits among the projects but belongs to the subspace side of
+       the site: it does not exist until the panel is opened, and its nav link
+       comes and goes with it. The id outranks the grayscale rule above, so the
+       film keeps its colour there the way the drawings do — everything else in
+       the projects greys out around it. */
+    #anim,
+    .nav-anim {
+      display: none;
+    }
+
+    body.subspace-on #anim {
+      display: block;
+      filter: none;
+    }
+
+    body.subspace-on .nav-anim {
+      display: inline;
+    }
+
     body.subspace-on > header {
       background-color: #3a3a3a;
     }
@@ -874,6 +893,7 @@
     <a href="#current-project">RoboSim</a>
     <a href="#orbslam">ORBSLAM Augmentation</a>
     <a href="#robotics">Robotics System</a>
+    <a href="#anim" class="nav-anim">Anim</a>
   </nav>
 
   <!-- Header -->
@@ -1849,6 +1869,21 @@
            alt="" aria-hidden="true" />
     </div>
   </div>
+
+  <!-- Anim -->
+  <section id="anim" class="section">
+    <h2>Anim</h2>
+    <p>
+      A hand-drawn figure walking through filmed places, built in C&plus;&plus; and OpenGL.
+      It is a thing you play rather than watch &mdash; you walk it with the arrow keys, and
+      the scenes cycle for as long as you keep going. Below is a recorded playthrough:
+      the title, the intro, one full pass through the four scenes, the crowd, and the exit.
+    </p>
+    <video class="anim-video" controls preload="none"
+           poster="stuff/anim-poster.jpg">
+      <source src="stuff/anim-playthrough.mp4" type="video/mp4" />
+    </video>
+  </section>
 
   <!-- Resume -->
   <section id="resume" class="section">
