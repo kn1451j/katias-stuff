@@ -368,6 +368,10 @@
        scroll-margin is what keeps a heading clear of the sticky nav and the
        subspace button fixed below it when the contents list scrolls here; both
        heights are measured in script, since they change with the breakpoint. */
+    .subspace-toc + h3 {
+      margin-top: 6px;
+    }
+
     .subspace h3 {
       font-size: 1.45em;
       font-weight: normal;
@@ -973,16 +977,20 @@
 
   <!-- My Subspace -->
   <section id="subspace" class="subspace section">
-    <h2>scribbles</h2>
+    <h2>Welcome to my subspace, friend!</h2>
 
-    <!-- The panel's own contents. Three links, each one scrolling to a heading
-         further down this same panel; the offset that keeps a heading clear of
-         the sticky nav is set as scroll-margin on the headings themselves. -->
+    <!-- The panel's own contents, listed against the page: the last link is
+         the part at the top. Each scrolls to a heading further down this same
+         panel; the offset that keeps a heading clear of the sticky nav is set
+         as scroll-margin on the headings themselves. -->
     <div class="subspace-toc" role="navigation" aria-label="Inside my subspace">
-      <a href="#stimulating-vectors">Stimulating vectors</a>
-      <a href="#creative-writing">Creative writing</a>
       <a href="#journal-entries">Journal entries</a>
+      <a href="#creative-writing">Creative writing</a>
+      <a href="#stimulating-vectors">Stimulating vectors</a>
+      <a href="#scribbles">Scribbles</a>
     </div>
+
+    <h3 id="scribbles">Scribbles</h3>
 
     <img class="subspace-banner" src="stuff/subspace-figures.png"
          alt="A row of hand-drawn figures, several scribbled out, one reduced to a single line" />
