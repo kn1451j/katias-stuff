@@ -311,9 +311,9 @@
     }
 
     /* The panel's own title. Still an h2 for the outline, but it drops the
-       project headings' size, weight, blue and padding — it reads as one more
-       line of the same handwriting as everything under it. */
-    .subspace h2 {
+       project headings' size, weight, blue and padding — it reads as one
+       centred line of the same handwriting as everything under it. */
+    .subspace > h2 {
       display: block;
       text-align: center;
       color: #2b2b2b;
@@ -336,27 +336,13 @@
        in from it, the way a list gets tucked into the right of a page rather
        than ruled across it. Starting the column at the half-way mark puts it
        just past the centred title above, whatever that title's width. */
-    .subspace-head {
-      display: flex;
-      align-items: center;
-      margin: 0 0 26px;
-    }
-
-    /* Half the row, ranged right, so the list beyond it always begins at the
-       same place no matter how wide the title is. */
-    .subspace-head > h2 {
-      width: 50%;
-      margin: 0;
-      padding-right: 22px;
-      text-align: right;
-    }
-
     .subspace-toc {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       gap: 4px;
-      margin: 0;
+      width: max-content;
+      margin: 0 0 26px calc(50% + 12px);
       font-size: 0.95em;
       line-height: 1.5;
     }
@@ -875,7 +861,7 @@
         height: 100px;
       }
 
-      .subspace h2,
+      .subspace > h2,
       .subspace-prose p,
       .entry-body {
         font-size: 1.15em;
@@ -883,10 +869,7 @@
 
       .subspace-toc {
         font-size: 0.9em;
-      }
-
-      .subspace-head > h2 {
-        padding-right: 14px;
+        margin-left: calc(50% + 6px);
       }
 
       .subspace h3 {
@@ -990,15 +973,15 @@
 
   <!-- My Subspace -->
   <section id="subspace" class="subspace section">
-    <!-- Title and contents are one masthead: the title ranged right in the
-         left half, the list stacked in the right, each centred on the other. -->
-    <div class="subspace-head">
-      <h2>scribbles</h2>
-      <div class="subspace-toc" role="navigation" aria-label="Inside my subspace">
-        <a href="#stimulating-vectors">Stimulating vectors</a>
-        <a href="#creative-writing">Creative writing</a>
-        <a href="#journal-entries">Journal entries</a>
-      </div>
+    <h2>scribbles</h2>
+
+    <!-- The panel's own contents. Three links, each one scrolling to a heading
+         further down this same panel; the offset that keeps a heading clear of
+         the sticky nav is set as scroll-margin on the headings themselves. -->
+    <div class="subspace-toc" role="navigation" aria-label="Inside my subspace">
+      <a href="#stimulating-vectors">Stimulating vectors</a>
+      <a href="#creative-writing">Creative writing</a>
+      <a href="#journal-entries">Journal entries</a>
     </div>
 
     <img class="subspace-banner" src="stuff/subspace-figures.png"
