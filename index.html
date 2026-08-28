@@ -979,130 +979,15 @@
   <section id="subspace" class="subspace section">
     <h2>Welcome to my subspace, friend!</h2>
 
-    <!-- The panel's own contents, listed against the page: the last link is
-         the part at the top. Each scrolls to a heading further down this same
-         panel; the offset that keeps a heading clear of the sticky nav is set
-         as scroll-margin on the headings themselves. -->
+    <!-- The panel's own contents, in the order the parts run. Each link
+         scrolls to a heading further down this same panel; the offset that
+         keeps a heading clear of the sticky nav is set as scroll-margin on the
+         headings themselves. -->
     <div class="subspace-toc" role="navigation" aria-label="Inside my subspace">
-      <a href="#journal-entries">Journal entries</a>
-      <a href="#creative-writing">Creative writing</a>
       <a href="#a-thought-to-stimulate-you">A thought to stimulate you, sir?</a>
+      <a href="#creative-writing">Creative writing</a>
+      <a href="#my-math-my-god">My math my god</a>
       <a href="#scribbles">Scribbles</a>
-    </div>
-
-    <h3 id="scribbles">Scribbles</h3>
-
-    <img class="subspace-banner" src="stuff/subspace-figures.png"
-         alt="A row of hand-drawn figures, several scribbled out, one reduced to a single line" />
-
-    <!-- The scribbles run in the open, as the panel's own writing rather than
-         behind a dropdown. Every image in the panel lives here now, set into
-         the text and alternating sides down the page. -->
-    <div class="subspace-prose">
-        <video class="anim-video" controls preload="none"
-               poster="stuff/anim-poster.jpg">
-          <source src="stuff/anim-playthrough.mp4" type="video/mp4" />
-        </video>
-      <p>
-        Actualization = becoming full rank. Being able to understand and feel everything in my
-        body. A non-blocking filter for our perceived existence. Unity with this world.
-      </p>
-
-      <figure class="entry-figure fig-float fig-l fig-xl">
-        <!-- Its labels are the smallest type on the page at this width, so this
-             is the one figure that opens to full size. -->
-        <button type="button" class="zoom-trigger" aria-label="Open the subspace diagram full size">
-          <!-- The PNG, not the SVG: an svg in an <img> renders in secure static
-               mode, where WebKit drops the text set in the embedded KatiaHand.
-               3874-diagram-clean.svg is the source it is exported from. -->
-          <img src="stuff/journal/3874-diagram-clean.png" loading="lazy"
-               alt="Two nested regions. On the left, my subspace holds my column space, with my
-                    nullspace as the band around it. On the right, the collective perceived world
-                    holds my rowspace, or action space, with the perceived nullspace &mdash;
-                    dissipation &mdash; as the band around it. A carries the left into the right; A
-                    transpose carries it back." />
-        </button>
-      </figure>
-
-      <p>
-        My subspace is the latent space that my thoughts take form in. Inside it, my column space
-        is experiences injested into thoughts and ideas by me. My nullspace is the rest -
-        experiences and perceptions that are unfathomable to me, which perhaps manifests in not
-        caring.
-      </p>
-      <p>
-        The collective perceived world is still only understood by me through a transformation.
-        However, my actions take reality beyond my projection (unseen to me) in it. Its rowspace
-        is the responses I present and actualize from my thoughts - my expression. Its perceived
-        nullspace is ideas and thoughts unable to manifest in this world. Perhaps this feels like
-        dissipation, leading to frustration, anger, a feeling of blocking.
-      </p>
-
-      <figure class="entry-figure fig-float fig-r fig-md doodle doodle-inline tilt-l">
-        <div class="doodle-art">
-          <img src="stuff/drawings/web/3803.png" loading="lazy"
-               alt="A coloured drawing of a root system and hanging shapes strung along a line" />
-          <img class="doodle-noise" src="stuff/drawings/web/3803-noise.png" loading="lazy"
-               alt="" aria-hidden="true" />
-        </div>
-      </figure>
-
-      <p>
-        Maybe being &ldquo;alive&rdquo; is the very capacity to transform life. The ability to act
-        as a filter, a transformer of motion through time - experience.
-      </p>
-      <p>
-        Constantly blocking the flow, with distractions, a lack of attention, builds rigidity. It
-        constrains the filter and allows less life to flow. Maybe this is what it means to feel
-        helpless: you desire to move with flow, naturally, but internal opposing structures - which
-        almost always seem external - prevent this.
-      </p>
-
-      <figure class="entry-figure photo fig-float fig-l fig-sm">
-        <img src="stuff/journal/3875-river.jpg" loading="lazy"
-             alt="A sketch of a river narrowing around pebbles, annotated: flow of life, pebbles
-                  causing friction and dissipation, constriction of flow when memory buildup, lack
-                  of flexibility, river is my world." />
-      </figure>
-
-      <p>
-        Flexibility is the highest value. Being responsive rather than resistant allows more flow
-        in the direction of life, rather than orthogonal to it, rather than dissipation into
-        entropy, like the force of friction.
-      </p>
-      <p>
-        Allowing oneself to be excited but also steady, when life calls for it.
-      </p>
-
-      <figure class="entry-figure photo fig-float fig-r fig-lg">
-        <img src="stuff/journal/3875-wave.jpg" loading="lazy"
-             alt="A wave running left to right, labelled input of life, with arrows above and
-                  below it, annotated: continuous, cyclic transformation when signal is unblocked
-                  &mdash; the flow. Below it a second wave: my function, and me composed of n
-                  fourier frequencies." />
-      </figure>
-
-      <p>
-        Focus and attention give flexibility. Being receptive to inputs prevents buildup of fear
-        and inattention, which atrophies ability to understand. Being expressive perpetuates
-        connection.
-      </p>
-
-      <!-- The tallest of the five and the last, so it runs past the closing
-           paragraph rather than leaving a band of empty column behind it. -->
-      <figure class="entry-figure fig-float fig-l fig-md doodle doodle-inline tilt-r">
-        <div class="doodle-art">
-          <img src="stuff/drawings/web/3805.png" loading="lazy"
-               alt="A crowded hillside of small creatures and cats beneath a lambda expression" />
-          <img class="doodle-noise" src="stuff/drawings/web/3805-noise.png" loading="lazy"
-               alt="" aria-hidden="true" />
-        </div>
-      </figure>
-
-      <p>
-        Two types of frustration? Lack of understanding, and lack of expression. Both constrict the
-        funnel.
-      </p>
     </div>
 
     <h3 id="a-thought-to-stimulate-you">A thought to stimulate you, sir?</h3>
@@ -1759,7 +1644,7 @@
       </div>
     </details>
 
-    <h3 id="journal-entries">Journal entries</h3>
+    <h3 id="my-math-my-god">My math my god</h3>
 
     <details class="entry">
       <summary>Once upon a time I learned what the arithmetic hierarchy is and now I
@@ -2087,6 +1972,121 @@
       </div>
     </details>
     -->
+
+    <h3 id="scribbles">Scribbles</h3>
+
+    <img class="subspace-banner" src="stuff/subspace-figures.png"
+         alt="A row of hand-drawn figures, several scribbled out, one reduced to a single line" />
+
+    <!-- The scribbles run in the open, as the panel's own writing rather than
+         behind a dropdown. Every image in the panel lives here now, set into
+         the text and alternating sides down the page. -->
+    <div class="subspace-prose">
+        <video class="anim-video" controls preload="none"
+               poster="stuff/anim-poster.jpg">
+          <source src="stuff/anim-playthrough.mp4" type="video/mp4" />
+        </video>
+      <p>
+        Actualization = becoming full rank. Being able to understand and feel everything in my
+        body. A non-blocking filter for our perceived existence. Unity with this world.
+      </p>
+
+      <figure class="entry-figure fig-float fig-l fig-xl">
+        <!-- Its labels are the smallest type on the page at this width, so this
+             is the one figure that opens to full size. -->
+        <button type="button" class="zoom-trigger" aria-label="Open the subspace diagram full size">
+          <!-- The PNG, not the SVG: an svg in an <img> renders in secure static
+               mode, where WebKit drops the text set in the embedded KatiaHand.
+               3874-diagram-clean.svg is the source it is exported from. -->
+          <img src="stuff/journal/3874-diagram-clean.png" loading="lazy"
+               alt="Two nested regions. On the left, my subspace holds my column space, with my
+                    nullspace as the band around it. On the right, the collective perceived world
+                    holds my rowspace, or action space, with the perceived nullspace &mdash;
+                    dissipation &mdash; as the band around it. A carries the left into the right; A
+                    transpose carries it back." />
+        </button>
+      </figure>
+
+      <p>
+        My subspace is the latent space that my thoughts take form in. Inside it, my column space
+        is experiences injested into thoughts and ideas by me. My nullspace is the rest -
+        experiences and perceptions that are unfathomable to me, which perhaps manifests in not
+        caring.
+      </p>
+      <p>
+        The collective perceived world is still only understood by me through a transformation.
+        However, my actions take reality beyond my projection (unseen to me) in it. Its rowspace
+        is the responses I present and actualize from my thoughts - my expression. Its perceived
+        nullspace is ideas and thoughts unable to manifest in this world. Perhaps this feels like
+        dissipation, leading to frustration, anger, a feeling of blocking.
+      </p>
+
+      <figure class="entry-figure fig-float fig-r fig-md doodle doodle-inline tilt-l">
+        <div class="doodle-art">
+          <img src="stuff/drawings/web/3803.png" loading="lazy"
+               alt="A coloured drawing of a root system and hanging shapes strung along a line" />
+          <img class="doodle-noise" src="stuff/drawings/web/3803-noise.png" loading="lazy"
+               alt="" aria-hidden="true" />
+        </div>
+      </figure>
+
+      <p>
+        Maybe being &ldquo;alive&rdquo; is the very capacity to transform life. The ability to act
+        as a filter, a transformer of motion through time - experience.
+      </p>
+      <p>
+        Constantly blocking the flow, with distractions, a lack of attention, builds rigidity. It
+        constrains the filter and allows less life to flow. Maybe this is what it means to feel
+        helpless: you desire to move with flow, naturally, but internal opposing structures - which
+        almost always seem external - prevent this.
+      </p>
+
+      <figure class="entry-figure photo fig-float fig-l fig-sm">
+        <img src="stuff/journal/3875-river.jpg" loading="lazy"
+             alt="A sketch of a river narrowing around pebbles, annotated: flow of life, pebbles
+                  causing friction and dissipation, constriction of flow when memory buildup, lack
+                  of flexibility, river is my world." />
+      </figure>
+
+      <p>
+        Flexibility is the highest value. Being responsive rather than resistant allows more flow
+        in the direction of life, rather than orthogonal to it, rather than dissipation into
+        entropy, like the force of friction.
+      </p>
+      <p>
+        Allowing oneself to be excited but also steady, when life calls for it.
+      </p>
+
+      <figure class="entry-figure photo fig-float fig-r fig-lg">
+        <img src="stuff/journal/3875-wave.jpg" loading="lazy"
+             alt="A wave running left to right, labelled input of life, with arrows above and
+                  below it, annotated: continuous, cyclic transformation when signal is unblocked
+                  &mdash; the flow. Below it a second wave: my function, and me composed of n
+                  fourier frequencies." />
+      </figure>
+
+      <p>
+        Focus and attention give flexibility. Being receptive to inputs prevents buildup of fear
+        and inattention, which atrophies ability to understand. Being expressive perpetuates
+        connection.
+      </p>
+
+      <!-- The tallest of the five and the last, so it runs past the closing
+           paragraph rather than leaving a band of empty column behind it. -->
+      <figure class="entry-figure fig-float fig-l fig-md doodle doodle-inline tilt-r">
+        <div class="doodle-art">
+          <img src="stuff/drawings/web/3805.png" loading="lazy"
+               alt="A crowded hillside of small creatures and cats beneath a lambda expression" />
+          <img class="doodle-noise" src="stuff/drawings/web/3805-noise.png" loading="lazy"
+               alt="" aria-hidden="true" />
+        </div>
+      </figure>
+
+      <p>
+        Two types of frustration? Lack of understanding, and lack of expression. Both constrict the
+        funnel.
+      </p>
+    </div>
   </section>
 
   <!-- Education -->
