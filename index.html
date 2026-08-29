@@ -444,13 +444,16 @@
       transition: all 0.3s ease;
     }
 
-    /* When each entry was written, set before its title: small, grey, and given
-       a fixed measure so the titles range together down the column. */
+    /* When each entry was written, small and grey out at the right edge of the
+       row, with the title running along the left. It floats, so a title long
+       enough to wrap runs under it rather than into it. The line-height sits
+       this smaller type on the title's own line. */
     .entry-date {
-      display: inline-block;
-      width: 8.5em;
+      float: right;
+      margin-left: 18px;
       color: #8a8a8a;
       font-size: 0.7em;
+      line-height: 1.75;
     }
 
     .entry > summary::-webkit-details-marker {
@@ -945,12 +948,15 @@
         padding: 10px 18px;
       }
 
-      /* A date and a title side by side leave neither room enough on a phone,
-         so the date takes its own line above. */
+      /* A float steals enough of the first line on a phone to push a title's
+         marker onto a row of its own, so the date takes a line instead, still
+         ranged right. */
       .entry-date {
+        float: none;
         display: block;
-        width: auto;
-        margin-bottom: 2px;
+        text-align: right;
+        margin: 0;
+        line-height: 1.5;
       }
 
       /* The per-drawing widths are too small to read on a phone; keep the
