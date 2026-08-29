@@ -478,6 +478,12 @@
       line-height: 1.8;
     }
 
+    /* The same date repeated inside the fold, for the phone layout below,
+       where the summary row has no room to carry it. */
+    .entry-date-folded {
+      display: none;
+    }
+
     .entry-body.placeholder {
       color: #777;
     }
@@ -949,13 +955,18 @@
       }
 
       /* A float steals enough of the first line on a phone to push a title's
-         marker onto a row of its own, so the date takes a line instead, still
-         ranged right. */
-      .entry-date {
-        float: none;
+         marker onto a row of its own, and a line of its own above the title
+         costs a row on every closed entry. So the date comes off the summary
+         and folds into the entry, sitting with the writing it dates. */
+      .entry > summary .entry-date {
+        display: none;
+      }
+
+      .entry-date-folded {
         display: block;
+        float: none;
         text-align: right;
-        margin: 0;
+        margin: 0 0 12px;
         line-height: 1.5;
       }
 
@@ -1058,6 +1069,7 @@
     <details class="entry">
       <summary><span class="entry-date">Jan, 2026</span>Thoughts as vectors</summary>
       <div class="entry-body">
+        <p class="entry-date entry-date-folded">Jan, 2026</p>
         <p>
           Isolation is addicting. I&rsquo;ve gone weeks without seeing people. I love it when my
           brain goes quiet. I love it when I reach a fully processed state, and then I am ready to
@@ -1311,6 +1323,7 @@
     <details class="entry">
       <summary><span class="entry-date">July 2026</span>Maybe the magnitude of desire defines utopia</summary>
       <div class="entry-body">
+        <p class="entry-date entry-date-folded">July 2026</p>
         <p>
           I recently watched a
           <a href="https://www.youtube.com/watch?v=JD4Fhh6GDcY&amp;t=1781s" target="_blank"
@@ -1437,6 +1450,7 @@
     <details class="entry">
       <summary><span class="entry-date">August, 2026</span>People as geometry, heatmaps, and functions (unfinished)</summary>
       <div class="entry-body">
+        <p class="entry-date entry-date-folded">August, 2026</p>
         <p>
           I am inspired by Aaron Vartiainen&rsquo;s characterization of people as a temperature
           gradient. He established a scale of people, from cold to cool to warm to hot, and argued
@@ -1565,6 +1579,7 @@
     <details class="entry">
       <summary><span class="entry-date">August, 2026</span>Rocks and trucks</summary>
       <div class="entry-body">
+        <p class="entry-date entry-date-folded">August, 2026</p>
         <p>
           There&rsquo;s a truck standing on the side of the road. It&rsquo;s a twelve wheeler. Do
           those exist? It looked like a twelve wheeler. Big white trailer fixed to its back,
@@ -1635,6 +1650,7 @@
     <details class="entry">
       <summary><span class="entry-date">July 2026</span>Love as a material</summary>
       <div class="entry-body">
+        <p class="entry-date entry-date-folded">July 2026</p>
         <p>
           I&rsquo;ve been thinking about the material properties of love. As in, how can we best
           characterize love in the way we characterize objects in our world?
@@ -1714,6 +1730,7 @@
       <summary><span class="entry-date">Spring 2023</span>Once upon a time I learned what the arithmetic hierarchy is and now I
                believe in God (TM, meditations)</summary>
       <div class="entry-body">
+        <p class="entry-date entry-date-folded">Spring 2023</p>
         <p>
           A human is defined by our thoughts and actions. Our existence can be quantified by exactly
           only these things. Striving for some self-set purpose is meaningless. There is no inherent
@@ -1816,6 +1833,7 @@
     <details class="entry">
       <summary><span class="entry-date">April 2024</span>Ways recursion manifests in reality</summary>
       <div class="entry-body">
+        <p class="entry-date entry-date-folded">April 2024</p>
         <p>
           I am thinking about what it means for a physical system to be closed. Is any system truly
           closed? Under this assumption, we can think of a system as a function of some set of
@@ -1890,6 +1908,7 @@
     <details class="entry">
       <summary><span class="entry-date">November 2025</span>Random thoughts about oscillation and my values</summary>
       <div class="entry-body">
+        <p class="entry-date entry-date-folded">November 2025</p>
         <p>
           Spring force F = -kx
         </p>
@@ -1970,6 +1989,7 @@
     <details class="entry">
       <summary><span class="entry-date">July 2026</span>Why does understanding people make me sad</summary>
       <div class="entry-body">
+        <p class="entry-date entry-date-folded">July 2026</p>
         <p>
           There&rsquo;s something deeply devastating in the love I feel for my family.
         </p>
