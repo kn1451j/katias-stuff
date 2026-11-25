@@ -16,9 +16,19 @@
     }
 
     /* Global Styles */
+    html {
+      min-height: 100%;
+      overscroll-behavior-y: none;
+    }
+
     body {
       font-family: 'Nunito', sans-serif;
       margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overscroll-behavior-y: none;
       background-color: #ffffff;
       color: #333;
       scroll-behavior: smooth;
@@ -62,6 +72,22 @@
     header p {
       font-size: 1.2em;
       margin: 0;
+    }
+
+    header .header-text {
+      flex: 1 1 520px;
+      max-width: 720px;
+    }
+
+    .header-columns {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: stretch;
+      gap: 30px;
+    }
+
+    .header-primary {
+      align-self: center;
     }
 
     nav {
@@ -164,9 +190,23 @@
       border: 1px solid #ccc;
     }
 
+    .resume-preview {
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      display: block;
+      width: min(900px, calc(100vw - 48px));
+      height: 800px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      overscroll-behavior-y: none;
+    }
+
     footer {
-        background-color: #1e3a8a;
-        color: white;
+      margin-top: auto;
+      flex: 0 0 auto;
+      background-color: #1e3a8a;
+      color: white;
       text-align: center;
       padding: 20px;
       font-size: 1em;
@@ -241,19 +281,20 @@
       left: 50%;
       transform: translateX(-50%);
       margin: 0;
+      background-color: #3a3a3a;
       z-index: 120;
     }
 
     .subspace-btn {
       display: block;
       margin: 0 auto;
-      background-color: #3f3f3f;
+      background-color: #1e3a8a;
       color: #ffffff;
       border: 2px solid #ffffff;
       border-radius: 25px;
-      padding: 10px 22px;
+      padding: 8px 18px;
       font-family: 'KatiaHand', 'Nunito', sans-serif;
-      font-size: 1.3em;
+      font-size: 1.2em;
       font-weight: 400;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -262,6 +303,48 @@
     .subspace-btn:hover {
       background-color: #ffffff;
       color: #3f3f3f;
+    }
+
+    header .substack-column {
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+      min-height: 160px;
+      padding-left: 28px;
+      border-left: 1px solid rgba(255, 255, 255, 0.8);
+      text-align: center;
+    }
+
+    header .substack-intro {
+      grid-row: 2;
+      margin: 0;
+      font-size: 1em;
+      font-style: italic;
+      line-height: 1.45;
+    }
+
+    .substack-update {
+      font-style: normal;
+    }
+
+    .substack-link {
+      display: inline-block;
+      grid-row: 4;
+      justify-self: center;
+      padding: 4px 12px;
+      border: 2px solid #ffffff;
+      border-radius: 25px;
+      background-color: transparent;
+      color: #ffffff;
+      font-size: 1.1em;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .substack-link:hover {
+      background-color: #ffffff;
+      color: #1e3a8a;
     }
 
     /* .subspace-open controls whether the panel is laid out; .subspace-on controls
@@ -786,12 +869,24 @@
     .doodle-5 { --shift: -21%; --rot: 2.5deg; }
     .doodle-6 { --shift: 23%; --rot: -1.5deg; }
 
+    .doodle-6 > .doodle-art {
+      top: 0;
+      transform: translate(-50%, calc(-100% - 8px)) rotate(var(--rot, 0deg));
+      transition: top 1.8s ease, transform 1.8s ease;
+    }
+
+    body.subspace-on .doodle-6 > .doodle-art {
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
+    }
+
     @media (prefers-reduced-motion: reduce) {
       nav,
       header,
       footer,
       .section,
       .subspace-btn,
+      .substack-link,
       .entry > summary {
         transition: none;
       }
@@ -807,6 +902,7 @@
       .doodle,
       .doodle-panel,
       .doodle-panel > .doodle-art,
+      .doodle-6 > .doodle-art,
       .doodle-noise,
       .doodle-side,
       .pair,
@@ -864,6 +960,21 @@
       header {
         flex-direction: column;
         gap: 18px;
+      }
+
+      header .header-text {
+        width: 100%;
+      }
+
+      .header-columns {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      header .substack-column {
+        padding: 18px 0 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.8);
+        border-left: 0;
       }
 
       .header-spin-b {
@@ -983,14 +1094,19 @@
          alt="" aria-hidden="true" />
 
     <div class="header-text">
-      <h1>Katia's Project Blog</h1>
-      <div class="links">
-      <a href="_https://substack.com/@katiawantstoplay">My Substack</a>
+      <div class="header-columns">
+        <div class="header-primary">
+          <h1>Katia's Project Blog</h1>
+          <p>A record of my favorite projects I've worked on</p>
+        </div>
+        <div class="substack-column">
+          <p class="substack-intro"><span class="substack-update">November 2026 update:</span> I'm currently focused on exploring writing in philosophy and art through mathematical bases and developing journalistic writing.</p>
+          <a href="https://substack.com/@katiawantstoplay" target="_blank" class="substack-link">click for writing blog</a>
+        </div>
       </div>
-      <p>A record of my favorite projects I've worked on</p>
       <div class="subspace-btn-slot">
         <button type="button" id="subspace-toggle" class="subspace-btn"
-                aria-expanded="false" aria-controls="subspace">my subspace &#9661;</button>
+                aria-expanded="false" aria-controls="subspace">my scribbles &#9661;</button>
       </div>
     </div>
 
@@ -2116,15 +2232,18 @@
   <section id="education" class="section">
     <h2>Education</h2>
     <p>
-      <strong>BSc in Computer Science, Carnegie Mellon University</strong><br />
+      <strong>BSc in Computer Science with University Honors, Carnegie Mellon University</strong><br />
       August 2021 &ndash; Spring 2025
     </p>
     <p>
-      Teaching Assistant for Algorithm Design and Analysis (January 2024 &ndash; January 2025).
-      Relevant coursework: Compiler Design, Undergraduate Complexity Theory,
-      Great Ideas in Theoretical Computer Science, Probability and Computing,
-      Parallel and GPU Computing, Machine Learning, and Foundations of Programming Languages.
+      <strong>Teaching Assistant for Algorithm Design and Analysis</strong><br />
+      January 2024 &ndash; January 2025
     </p>
+    <div id="resume">
+      <iframe class="resume-preview" src="stuff/Katerina_Nikiforova_CV-preview.html"
+              title="Resume preview" loading="lazy"></iframe>
+      <p><a href="stuff/Katerina_Nikiforova_CV.docx" download>Download resume (DOCX)</a></p>
+    </div>
   </section>
 
   <div class="doodle doodle-side doodle-r doodle-4">
@@ -2218,17 +2337,12 @@
     </div>
   </div>
 
-  <!-- Resume -->
-  <section id="resume" class="section">
-    <h2>Resume</h2>
-    <embed src="stuff/summerres.pdf" type="application/pdf" class="pdf-embed" />
-  </section>
-
   <!-- Footer -->
   <footer>
     <p>
       <a href="https://www.linkedin.com/in/katerina-nikiforova-240881229/" target="_blank">LinkedIn</a> |
-      <a href="https://github.com/kn1451j" target="_blank">GitHub</a>
+      <a href="https://github.com/kn1451j" target="_blank">GitHub</a> |
+      <a href="https://substack.com/@katiawantstoplay" target="_blank">Substack</a>
     </p>
   </footer>
 
@@ -2247,7 +2361,7 @@
       var closing = false;
 
       function label(open) {
-        btn.innerHTML = open ? 'back to projects &#9651;' : 'my subspace &#9661;';
+        btn.innerHTML = open ? 'back to projects &#9651;' : 'my scribbles &#9661;';
         btn.setAttribute('aria-expanded', String(open));
       }
 
